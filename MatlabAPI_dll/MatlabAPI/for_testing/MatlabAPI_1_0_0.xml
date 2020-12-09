@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MatlabAPI_1_0_0</name>
+    </assembly>
+    <members>
+        <member name="T:MatlabAPI_1_0_0.ClassMatlabAPI">
+            <summary>
+            The ClassMatlabAPI class provides a CLS compliant, MWArray interface to the MATLAB
+            functions contained in the files:
+            <newpara></newpara>
+            C:\Users\Lenovo\Desktop\MatlabAPI Developer\ECGAnalysis.m
+            </summary>
+            <remarks>
+            @Version 4.0
+            </remarks>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.#cctor">
+            <summary internal= "true">
+            The static constructor instantiates and initializes the MATLAB Runtime instance.
+            </summary>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.#ctor">
+            <summary>
+            Constructs a new instance of the ClassMatlabAPI class.
+            </summary>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.Finalize">
+            <summary internal= "true">
+            Class destructor called by the CLR garbage collector.
+            </summary>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.Dispose">
+            <summary>
+            Frees the native resources associated with this object
+            </summary>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.Dispose(System.Boolean)">
+            <summary internal= "true">
+            Internal dispose function
+            </summary>
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis">
+             <summary>
+             Provides a single output, 0-input MWArrayinterface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <returns>An MWArray containing the first output argument.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(MathWorks.MATLAB.NET.Arrays.MWArray)">
+             <summary>
+             Provides a single output, 1-input MWArrayinterface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="FileAdress">Input argument #1</param>
+             <returns>An MWArray containing the first output argument.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(MathWorks.MATLAB.NET.Arrays.MWArray,MathWorks.MATLAB.NET.Arrays.MWArray)">
+             <summary>
+             Provides a single output, 2-input MWArrayinterface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="FileAdress">Input argument #1</param>
+             <param name="JsonRequestPackets">Input argument #2</param>
+             <returns>An MWArray containing the first output argument.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(System.Int32)">
+             <summary>
+             Provides the standard 0-input MWArray interface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="numArgsOut">The number of output arguments to return.</param>
+             <returns>An Array of length "numArgsOut" containing the output
+             arguments.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(System.Int32,MathWorks.MATLAB.NET.Arrays.MWArray)">
+             <summary>
+             Provides the standard 1-input MWArray interface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="numArgsOut">The number of output arguments to return.</param>
+             <param name="FileAdress">Input argument #1</param>
+             <returns>An Array of length "numArgsOut" containing the output
+             arguments.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(System.Int32,MathWorks.MATLAB.NET.Arrays.MWArray,MathWorks.MATLAB.NET.Arrays.MWArray)">
+             <summary>
+             Provides the standard 2-input MWArray interface to the ECGAnalysis MATLAB
+             function.
+             </summary>
+             <remarks>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="numArgsOut">The number of output arguments to return.</param>
+             <param name="FileAdress">Input argument #1</param>
+             <param name="JsonRequestPackets">Input argument #2</param>
+             <returns>An Array of length "numArgsOut" containing the output
+             arguments.</returns>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.ECGAnalysis(System.Int32,MathWorks.MATLAB.NET.Arrays.MWArray[]@,MathWorks.MATLAB.NET.Arrays.MWArray[])">
+             <summary>
+             Provides an interface for the ECGAnalysis function in which the input and output
+             arguments are specified as an array of MWArrays.
+             </summary>
+             <remarks>
+             This method will allocate and return by reference the output argument
+             array.<newpara></newpara>
+             M-Documentation:
+             Initialization
+             </remarks>
+             <param name="numArgsOut">The number of output arguments to return</param>
+             <param name= "argsOut">Array of MWArray output arguments</param>
+             <param name= "argsIn">Array of MWArray input arguments</param>
+            
+        </member>
+        <member name="M:MatlabAPI_1_0_0.ClassMatlabAPI.WaitForFiguresToDie">
+             <summary>
+             This method will cause a MATLAB figure window to behave as a modal dialog box.
+             The method will not return until all the figure windows associated with this
+             component have been closed.
+             </summary>
+             <remarks>
+             An application should only call this method when required to keep the
+             MATLAB figure window from disappearing.  Other techniques, such as calling
+             Console.ReadLine() from the application should be considered where
+             possible.</remarks>
+            
+        </member>
+    </members>
+</doc>
