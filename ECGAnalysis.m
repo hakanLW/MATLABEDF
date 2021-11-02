@@ -298,21 +298,17 @@ end
 % %%%%%%%%%%%%%%%%%%%%%%%%%
 % % PREMATURE BEAT CLASSIFICATION
 % %%%%%%%%%%%%%%%%%%%%%%%%%
-
-    
-    if MatlabAPIConfigRequest.IsLogWriteToConsole
-        disp( 'Premature beat classifications are being extracted: ' )
-        tic
-    end
-    QRSComplexes = PrematureBeatClassification(  ...
-        ECGSignals, ...
-        QRSComplexes, ...
-        AnalysisParametersRequest,HolterRecordInfoRequest, MatlabAPIConfigRequest.AnalysisChannel);
-    if MatlabAPIConfigRequest.IsLogWriteToConsole
-        disp('# Completed...')
-        toc
-        disp( ' ' )
-    end
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    disp( 'Premature beat classifications are being extracted: ' )
+    tic
+end
+QRSComplexes = PrematureBeatClassification(QRSComplexes, ...
+    AnalysisParametersRequest );
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    disp('# Completed...')
+    toc
+    disp( ' ' )
+end
     
 
 
