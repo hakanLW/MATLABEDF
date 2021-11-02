@@ -45,7 +45,7 @@ SlidingWindows = ClassUnusualSignalDetection.GetSlidingWindows...
 if ~isempty( QRSComplexes ) && ~isempty( QRSComplexes.R )
     qrsAmplitudeThreshold = fitdist( double( QRSComplexes.QRSAmplitude ), 'normal' );
 else
-    qrsAmplitudeThreshold = inf;
+    qrsAmplitudeThreshold.mu = inf;
 end
 % UNUSUAL SIGNAL ASSESMENT
 % Preallocation #Ventricular Fibrillation

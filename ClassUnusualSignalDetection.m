@@ -312,10 +312,15 @@ classdef ClassUnusualSignalDetection
                 % clear field
                 qrsFieldNames( strcmp( qrsFieldNames, 'P' ) ) = [  ];
             end
+            
+          
             % qrs fields
             for fieldIndex = 1 : length( qrsFieldNames )
+                
                 QRSComplexes.( qrsFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
+                
             end
+            
             
         end
         

@@ -35,6 +35,7 @@ else
     %   Initialization
     %   ---------------------------------
     
+    
     % - heart rate calculation / store heart rate changke
     HeartRate = ClassRhythmAnalysis.CalculateHeartRate( qrsComplexes.R, recordInfo.RecordSamplingFrequency );
     HeartRate = [ HeartRate( 1 ) ; HeartRate ];

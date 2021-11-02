@@ -121,38 +121,47 @@ for morphIndex = 1 : qrsMorphologies.MorphCounter
     
 end; clear numbMorph morphBeatIndex morphIndex morphHeartRateChange
 
-%
-%
-% PREMATURE BEATS
-% - possible ventricular morphs
-possibleVentricularMorphs = ...
-    ( ( qrsMorphologies.BeatInterval > 0.120 ) & ( qrsMorphologies.HeartRateChange > 1.15 ) );
-% - initialization
-qrsComplexes.VentricularBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
-qrsComplexes.AtrialBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
-for morphIndex = 1 : length( possibleVentricularMorphs )
-    if possibleVentricularMorphs( morphIndex )
-        qrsComplexes.VentricularBeats( qrsComplexes.BeatMorphology == morphIndex - 1 ) = true;
-    end
-end; clear morphIndex
-if normalQRSInterval < 0.110
-    qrsComplexes.VentricularBeats( (qrsComplexes.QRSInterval >= 0.120 ) & ( heartRateChange >= 1.15 ) ) = true;
-end
-% Atrial Beats
-qrsComplexes.AtrialBeats( ~qrsComplexes.VentricularBeats & ( heartRateChange > 1.20 ) & ( heartRate > 90 ) ) = true;
-
-%
-%
+% %
+% %
+% % PREMATURE BEATS
+% % - possible ventricular morphs
+% possibleVentricularMorphs = ...
+%     ( ( qrsMorphologies.BeatInterval > 0.120 ) & ( qrsMorphologies.HeartRateChange > 1.15 ) );
+% % - initialization
+% qrsComplexes.VentricularBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
+% qrsComplexes.AtrialBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
+% for morphIndex = 1 : length( possibleVentricularMorphs )
+%     if possibleVentricularMorphs( morphIndex )
+%         qrsComplexes.VentricularBeats( qrsComplexes.BeatMorphology == morphIndex - 1 ) = true;
+%     end
+% end; clear morphIndex
+% if normalQRSInterval < 0.110
+%     qrsComplexes.VentricularBeats( (qrsComplexes.QRSInterval >= 0.120 ) & ( heartRateChange >= 1.15 ) ) = true;
+% end
+% 
+% % Atrial Beats
+% qrsComplexes.AtrialBeats( ~qrsComplexes.VentricularBeats & ( heartRateChange > 1.20 ) & ( heartRate > 90 ) ) = true;
+% % & ( heartRate > 90 )
+% %
+% %~qrsComplexes.VentricularBeats
 % SET HEART RATE
 qrsComplexes.HeartRate = heartRate;
 qrsComplexes.HeartRateChange = heartRateChange;
+% 
+% %
+% %
+% % PLOT
+% % plot_BeatClassification
+% 
+% end
 
-%
-%
-% PLOT
-% plot_BeatClassification
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
-end
+% % PREMATURE BEATS
+% % - possible ventricular morphs
+
+
+
 
 end
 

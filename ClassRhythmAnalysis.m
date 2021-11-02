@@ -46,6 +46,7 @@ classdef ClassRhythmAnalysis
             
         end
         
+
         
         %% Tachycardia / Bradycardia Run Detection
         
@@ -1076,7 +1077,7 @@ end
 
 %% Maximum Heart Rate Detection
 
-function newHeartRate = MaximumHeartRateDetection( qrsComplexes, heartRate )
+ function [newHeartRate] = MaximumHeartRateDetection( qrsComplexes, heartRate )
 
 % Plot
 % close all; figure; plot( heartRate );

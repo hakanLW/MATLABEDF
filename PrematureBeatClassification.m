@@ -1,241 +1,486 @@
-function qrsComplexes = PrematureBeatClassification( ~, qrsComplexes, analysisParameters )
+function qrsComplexes = PrematureBeatClassification( ecgSignals , qrsComplexes, analysisParameters,recordInfo,AnalysisChannel)
 
 % INITIALIZATION
-% - atrial beats
-qrsComplexes.AtrialBeats = ...
-    qrsComplexes.AtrialBeats & ~( qrsComplexes.P.PeakPoint > 1 );
-if ~isempty( qrsComplexes.R )
-    qrsComplexes.AtrialBeats( end ) = false;
-end
-% - ventricular beats
-qrsComplexes.VentricularBeats = ...
-    qrsComplexes.VentricularBeats & ~( qrsComplexes.P.PeakPoint > 1 );
-if ~isempty( qrsComplexes.R )
-    qrsComplexes.VentricularBeats( end ) = false;
-end
-% Mostly Seen Morph HeartRate
-initialHeartRateRef = mean( qrsComplexes.HeartRate( qrsComplexes.BeatMorphology == 0 ) );
 
-%
-%
-% ATRIAL BEAT CLASSIFICATION
-% - initialization
-startBeatIndex = - 1;
-startRun = false;
-% - Assessment
-for beatIndex = 1 : ( length( qrsComplexes.R ) - 1 )
+if isempty( qrsComplexes.R )
     
-    % Ref Value
-    if beatIndex > 4
-        prematureBeatControl = any( qrsComplexes.VentricularBeats( beatIndex - 4 : beatIndex ) );
-        prematureBeatControl = prematureBeatControl || any( qrsComplexes.AtrialBeats( beatIndex - 4 : beatIndex ) );
-        prematureBeatControl = prematureBeatControl || any( abs( 1 - qrsComplexes.HeartRateChange( beatIndex - 4 : beatIndex ) ) > 0.25 );
-        if ~prematureBeatControl
-            refHeartRate = mean( qrsComplexes.HeartRate( beatIndex - 4 : beatIndex ) );
-        end
+    qrsComplexes.VentricularBeats = [ ];
+    qrsComplexes.AtrialBeats = [ ];
+    
+else
+    
+    %   --------------------------------
+    %   Initialization
+    %   ---------------------------------
+    
+    % - heart rate calculation / store heart rate change
+    HeartRate = ClassRhythmAnalysis.CalculateHeartRate( qrsComplexes.R, recordInfo.RecordSamplingFrequency ); %duzeltme
+    HeartRate = [ HeartRate( 1 ) ; HeartRate ];
+    HeartRateChange = zeros( length( HeartRate ), 1, 'single' );
+    
+    % - store premature beats
+    qrsComplexes.VentricularBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
+    qrsComplexes.AtrialBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%   --------------------------------
+    %   Normal Beat Detection
+    %   --------------------------------
+    %PT%
+    
+    tempPStartPoint = qrsComplexes.P.StartPoint( 2:end);
+    tempTEndPoint = qrsComplexes.T.EndPoint( 1:end-1);
+    PTInterval= round( ( tempPStartPoint - tempTEndPoint ) / recordInfo.RecordSamplingFrequency, single(3));
+    PTInterval( PTInterval < 0 ) = 0;
+    PTInterval = [ 0; PTInterval ];
+    % - qrs interval
+    possibleNormalBeat = ( ( qrsComplexes.QRSInterval< single( 0.120 )& ( qrsComplexes.R <= ( 10 *  recordInfo.RecordSamplingFrequency ) )));
+    % ) & ( qrsComplexes.R <= ( 10 *  recordInfo.RecordSamplingFrequency ) 
+    %     % - p amplitudes
+    possibleNormalBeat = possibleNormalBeat & ( PTInterval > ( 0 ) );
+    % - t amplitude
+    possibleNormalBeat = possibleNormalBeat & ( qrsComplexes.T.Amplitude >= single( 0.05 ) );
+    % - t amplitude
+    possibleNormalBeat = possibleNormalBeat & ( qrsComplexes.P.Amplitude >= single( 0.05 ) );
+    % - heartRate
+    possibleNormalBeat = possibleNormalBeat & ( HeartRate > analysisParameters.Bradycardia.ClinicThreshold ) & ( HeartRate < analysisParameters.Tachycardia.ClinicThreshold );
+    
+    %   --------------------------------
+    %  Normal Beat Paremeters
+    %   --------------------------------
+    
+    if any( possibleNormalBeat )
+        
+        % - heart rate
+        normalBeatHeartRate = mean( HeartRate( possibleNormalBeat ) ); %duzeltme
+        
     else
-        refHeartRate = initialHeartRateRef;
+        
+        if length( qrsComplexes.R ) < 10
+            lastBeat = length( qrsComplexes.R );
+        else
+            lastBeat = 10;
+        end
+        
+        % - heart rate
+        normalBeatHeartRate = mean( HeartRate( double( 1 ) : double( lastBeat ) ) );
+        
     end
-    
-    if ~qrsComplexes.AtrialBeats( beatIndex )
-        if ...
-                ... no p wave
-                ~( qrsComplexes.P.PeakPoint( beatIndex ) > 1 ) && ...
-                ... not the first beat
-                ( beatIndex > 2 ) && ...
-                ... not in ventricular pattern
-                ~qrsComplexes.VentricularBeats( beatIndex - 2 ) && ...
-                ~qrsComplexes.VentricularBeats( beatIndex - 1 ) && ...
-                ~qrsComplexes.VentricularBeats( beatIndex )
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    for BeatIndex = 1 : ( length( qrsComplexes.R ) - 1 )
+        
+        
+        if BeatIndex == 1
             
-            if ...
-                    ... previous beat condition
-                    ( qrsComplexes.HeartRate( beatIndex - 1 ) > 60 / ( analysisParameters.Pause.ClinicThreshold / 1000 ) ) && ...
-                    ... current beat condition
-                    ( qrsComplexes.HeartRate( beatIndex ) > analysisParameters.Tachycardia.ClinicThreshold )
-                % heart rate change
-                suddenHeartRateChange = qrsComplexes.HeartRate( beatIndex ) / qrsComplexes.HeartRate( beatIndex - 1 );
-                % assessment
-                if suddenHeartRateChange > 1.25
-                    qrsComplexes.HeartRateChange( beatIndex ) = suddenHeartRateChange;
-                    qrsComplexes.AtrialBeats( beatIndex ) = true;
-                end
-            end
-        end
-    end
-    
-    % Heart rate based check
-    if beatIndex > 1
-        if qrsComplexes.AtrialBeats( beatIndex )
-            % - low heart rate
-            if qrsComplexes.HeartRate( beatIndex ) < 90
-                qrsComplexes.AtrialBeats( beatIndex ) = false;
-            end
-            % - noise based pvc
-            if qrsComplexes.VentricularBeats( beatIndex - 1 )
-                qrsComplexes.AtrialBeats( beatIndex ) = false;
-                qrsComplexes.VentricularBeats( beatIndex - 1 ) = false;
-            end
-        end
-    end
-    
-    %     if qrsComplexes.R( beatIndex ) > 735 * 250
-    %         plot_BeatClassBPM;
-    %         title( num2str( qrsComplexes.AtrialBeats( beatIndex ) ) )
-    %     end
-    
-    % Search for each beat
-    if qrsComplexes.AtrialBeats( beatIndex )
-        % Get the start index
-        if ~startRun
-            startBeatIndex = beatIndex;
-            startRun = true;
-        end
-        % Check for the compensatory pause
-        if qrsComplexes.AtrialBeats( beatIndex + 1 ) && ( beatIndex < ( length( qrsComplexes.R ) - 1 ) ) 
-            continue;
+            % Initialization
+            possibleVentricularRunStart = false;
+            possibleAtrialRunStart = false;
+            % QRS Complex interval
+            qrsIntervalThreshold = single( 0.120 );
+            
         else
-            % Check if the next beat is not ventricular
-            if ~qrsComplexes.VentricularBeats( beatIndex + 1 )
-                % Check for the heart rate change of the next beat
-                if qrsComplexes.HeartRate( beatIndex + 1 ) > 60 / ( analysisParameters.Pause.ClinicThreshold / 1000 )
-                    nextBeatHeartRateChange = qrsComplexes.HeartRate( beatIndex + 1 ) / refHeartRate;
-                else
-                    nextBeatHeartRateChange = inf;
-                end
-                % Check for the heart rate change of the initial beat
-                if qrsComplexes.HeartRate( startBeatIndex ) > 60 / ( analysisParameters.Pause.ClinicThreshold / 1000 )
-                    initialBeatHeartRateChange = qrsComplexes.HeartRate( startBeatIndex ) / refHeartRate;
-                else
-                    initialBeatHeartRateChange = inf;
-                end
-                % If there is a compensatory pause, skip
-                if ( nextBeatHeartRateChange < 0.90 ) && ( initialBeatHeartRateChange > 1.10 )
-                    % - end of the run
-                    startBeatIndex = -1;
-                    startRun = false;
+                        
+            % BASELINE CHECK %düzeltme pr interval p start time pt
+            % ortalamasý al
+            if ( BeatIndex > 1 )
+                % Previous beat baseline
+                previousBaseline = ...
+                    mean( [ ...
+                    ecgSignals.(AnalysisChannel )( qrsComplexes.StartPoint( BeatIndex - 1 ) ); ...
+                    ecgSignals.(AnalysisChannel )( qrsComplexes.EndPoint( BeatIndex - 1 ) ) ...
+                    ] );
+                % Current beat baseline
+                currentBaseline = mean( [ ...
+                    ecgSignals.(AnalysisChannel )( qrsComplexes.StartPoint( BeatIndex ) ); ...
+                    ecgSignals.(AnalysisChannel )( qrsComplexes.EndPoint( BeatIndex ) ) ...
+                    ] );
+                % Assessment
+                if ...
+                        ( abs( currentBaseline - previousBaseline ) > qrsComplexes.QRSAmplitude( BeatIndex ) ) ...
+                        || ...
+                        ( abs( currentBaseline - previousBaseline ) > qrsComplexes.QRSAmplitude( BeatIndex - 1 ) )
                     continue;
-                else
-                    % run length
-                    runBeatDuration = beatIndex - startBeatIndex + 1;
-                    % previous heart rate change mean
-                    runHeartRateChange = mean( qrsComplexes.HeartRate( startBeatIndex : beatIndex ) ) / refHeartRate;
-                    % based on the run length
-                    if ( nextBeatHeartRateChange < 1 ) && ( runBeatDuration > 2 ) && ( runHeartRateChange > 1.50 )
-                        % - end of the run
-                        startBeatIndex = -1;
-                        startRun = false;
-                    else
-                        % - flag down
-                        qrsComplexes.AtrialBeats( startBeatIndex : beatIndex ) = false;
-                        % - end of the run
-                        startBeatIndex = -1;
-                        startRun = false;
-                    end
+                end
+            end
+            
+            % RESET
+            isVentricularPrematureBeat = false;
+            isAtrialPrematureBeat = false;
+            
+            % THRESHOLD
+            if exist( 'meanQRSAmplitude', 'var' ) && ( BeatIndex > 4 )
+                % QRS Amplitudes
+                newMeanQRSAmplitude = mean( qrsComplexes.QRSAmplitude( double( BeatIndex - 4 ) : double( BeatIndex ) ) ); 
+                if ( newMeanQRSAmplitude / meanQRSAmplitude ) < 1.25
+                    meanQRSAmplitude = newMeanQRSAmplitude;
                 end
             else
+                % QRS Amplitudes
+                meanQRSAmplitude= mean( qrsComplexes.QRSAmplitude( BeatIndex ) );
+            end
+            % Assessment based on the amplitude
+            if meanQRSAmplitude < 0.5
+                % dont care about the morphology
+                if qrsComplexes.QRSAmplitude( BeatIndex ) < 0.5
+                    qrsComplexes.Type( BeatIndex ) = abs( qrsComplexes.Type( BeatIndex ) );
+                end
+                % increase the threshold
+                pvcHeartRateChangeThreshold = single( 1.30 );
+                pacHeartRateChangeThreshold = single( 1.50 );
+                pvcCompansatoryPauseRatio = single( 0.97 );
+                pacCompansatoryPauseRatio = single( 0.97 );
+            else
+                % default thresholds
+                pvcHeartRateChangeThreshold = single( 1.10 );
+                pacHeartRateChangeThreshold = single( 1.25 );
+                pvcCompansatoryPauseRatio = single( 0.91 );
+                pacCompansatoryPauseRatio = single( 0.91 );
+            end
+            
+            % CURRENT VALUES OF THE DETECTION PARAMETERS
+            % - Heart Rate Condition
+            HeartRateChange( BeatIndex ) = single( HeartRate( BeatIndex ) ./ normalBeatHeartRate );
+            
+            % - P wave condition
+            PWaveCondition = ( qrsComplexes.P.Amplitude( BeatIndex ) <= single( 0.025 ) );
+            if ~PWaveCondition
+                if ...
+                        ( HeartRateChange( BeatIndex ) > single( 1.5 ) ) && ...
+                        ( qrsComplexes.QRSInterval( BeatIndex ) >= qrsIntervalThreshold ) && ...
+                        ( qrsComplexes.P.Amplitude( BeatIndex ) <= single( 0.05 ) )
+                    PWaveCondition = true;
+                end
+            end
+            
+            % - PLOT
+            %             if qrsComplexes.R( BeatIndex ) > 23.4 * recordInfo.RecordSamplingFrequency
+            %                 disp( [ 'NormalHeartRate: ' num2str( normalBeatHeartRate ) ] )
+            %                 disp( [ 'HeartRate: ' num2str( HeartRate( BeatIndex ) ) ' // HeartRateChange: ' num2str( HeartRateChange( BeatIndex ) ) ] )
+            %                 plotDeveloper_prematureBeats;
+            %             end
+            
+            % ABNORMAL QRS DETECTION
+            % - Initialization
+            ventricularBasedAbnormalBeat = false;
+            atrialBasedAbnormalBeat = false;
+            % - Assessment
+            if ~( qrsComplexes.NoisyBeat( BeatIndex ) ) && ( BeatIndex > 2 ) && ( HeartRateChange( BeatIndex ) > 1.10 )
+                % Baseline Change
+                currentStartAmplitude = ecgSignals.(AnalysisChannel )( qrsComplexes.StartPoint( BeatIndex ) );
+                previousStartAmplitude = ecgSignals.(AnalysisChannel )( qrsComplexes.StartPoint( BeatIndex - 1 ) );
+                if abs( currentStartAmplitude - previousStartAmplitude ) < 0.2
+                    % Comparison between current and previous R point amplitudes.
+                    currentRAmplitude = ecgSignals.(AnalysisChannel )( qrsComplexes.R( BeatIndex ) );
+                    previousRAmplitude = ecgSignals.(AnalysisChannel )( qrsComplexes.R( BeatIndex - 1 ) );
+                    % Amplitude Change
+                    amplitudeChange = ( currentRAmplitude > ( previousRAmplitude + 0.2 ) );
+                else
+                    amplitudeChange = false;
+                end
+                % rapid beat
+                rapidBeat = HeartRateChange( BeatIndex ) > 1.25;
+                
+                % ABNORMAL BEAT TYPE CONTROL
+                % - If ( the amplitude is increased AND there is no p wave
+                %       OR
+                %      there is a rapid increase in the heart rate )
+                %       THEN
+                %      !! check the qrs interval or the sequintal types
+                if ...
+                        ... FIRST CONDITION : // increase in the amplitude && non p wave || rapid heart rate incrase
+                        ( ( amplitudeChange && PWaveCondition ) || ( rapidBeat && PWaveCondition ) ) ...
+                        && ...
+                        ... SECOND CONDITION: // the qrs interval or the sequintal types
+                        ( qrsComplexes.Type( BeatIndex ) < 0 ) || ...
+                        ( ( qrsComplexes.QRSInterval( BeatIndex ) > qrsIntervalThreshold ) || ...
+                        ( ( qrsComplexes.QRSInterval( BeatIndex ) > 0.090 ) && ( any( qrsComplexes.VentricularBeats( BeatIndex - 2 : BeatIndex - 1 ) ) ) ) )
+                    
+                    if ( HeartRate( BeatIndex ) / HeartRate( BeatIndex - 1 ) ) > 1.15
+                        ventricularBasedAbnormalBeat = true;
+                    end
+                    
+                elseif...
+                        ... FIRST CONDITION : // increase in the amplitude && non p wave || rapid heart rate incrase
+                        ( ( amplitudeChange && PWaveCondition ) || ( rapidBeat  ) ) ...
+                        && ...
+                        ( qrsComplexes.QRSInterval( BeatIndex ) < qrsIntervalThreshold )
+                    
+                    if ( HeartRate( BeatIndex ) / HeartRate( BeatIndex - 1 ) ) > 1.15
+                        atrialBasedAbnormalBeat = true;
+                    end
+                    
+                end
+                
+            end
+            
+            %             % - PLOT
+            %             if qrsComplexes.R( BeatIndex ) > 6.5 * recordInfo.RecordSamplingFrequency
+            %                 disp( [ 'NormalHeartRate: ' num2str( normalBeatHeartRate ) ] )
+            %                 disp( [ 'HeartRate: ' num2str( HeartRate( BeatIndex ) ) ' // HeartRateChange: ' num2str( HeartRateChange( BeatIndex ) ) ] )
+            %                 plotDeveloper_prematureBeats;
+            %             end
+            
+            %% PREMATURE VENTRICULAR BEATS
+            %%%
+            %%%
+            %%%
+            
+            % VENTRICULAR ASSESMENT
+            if ...
+                    ... if the p wave of the current QRS does not exist
+                    ( ...
+                    PWaveCondition || ...
+                    ( qrsComplexes.Type( BeatIndex ) < 0 ) || ...
+                    ( ventricularBasedAbnormalBeat ) ...
+                    )...
+                    && ...
+                    ... increased heart rate change
+                    ( ...
+                    ( HeartRateChange( BeatIndex ) > pvcHeartRateChangeThreshold ) || ...
+                    ( qrsComplexes.Type( BeatIndex ) < 0 ) || ...
+                    ( ventricularBasedAbnormalBeat ) ...
+                    ) && ...
+                    ... qrs interval || qrs type with high amplitude
+                    ( ...
+                    ( qrsComplexes.QRSInterval( BeatIndex ) >= qrsIntervalThreshold ) || ...
+                    ( qrsComplexes.Type( BeatIndex ) < 0 ) || ...
+                    ( ventricularBasedAbnormalBeat ) ...
+                    )
+                
+                % rise flag
+                isVentricularPrematureBeat = true;
+                % get run start
+                % Start a run
+                if ~possibleVentricularRunStart
+                    % - beat index
+                    possibleVentricularRunStartIndex = BeatIndex;
+                end
+                
+            end
+            
+            % CHECK THE UPCOMING BEAT:
+            % if the next beat has a compansatory pause or if it is a pvc beat; start a run
+            % if the next beat does not have the requiered parameters, un-flag it.
+            if isVentricularPrematureBeat && ( BeatIndex < length( HeartRate ) )
+                
+                % Next beat heart rate change: is there a compasantory pause
+                if HeartRate( BeatIndex + 1 ) > ( 60 / ( analysisParameters.Asystole.ClinicThreshold / 1000 ) )
+                    % if there is no such a longer pause than an asystole threshold
+                    nextBeatHeartRateChange = ( HeartRate( BeatIndex + 1 ) / normalBeatHeartRate );
+                else
+                    % if there is a longer pause than an asystole threshold
+                    nextBeatHeartRateChange = 1;
+                end
+                
+                if ... VENTRICULAR RUN %duzeltme
+                        ... upcoming beat heart rate change
+                        ( ...
+                        ( nextBeatHeartRateChange > pvcHeartRateChangeThreshold ) || ...
+                        ( qrsComplexes.Type( BeatIndex + 1 ) < 0 )  ...
+                        ) && ...
+                        ... upcoming beat qrs interval
+                        ( ...
+                        ( qrsComplexes.QRSInterval( BeatIndex + 1 ) >= qrsIntervalThreshold ) || ...
+                        ( qrsComplexes.Type( BeatIndex + 1 ) < 0 )  ...
+                        )
+                    
+                    % Start a run
+                    if ~possibleVentricularRunStart
+                        % - flag up
+                        possibleVentricularRunStart = true;
+                    end
+                    
+                elseif ... VENTRICULAR RUN ENDS
+                        ( nextBeatHeartRateChange < pvcCompansatoryPauseRatio ) ...
+                        || ... 
+                        ( ( ( BeatIndex - possibleVentricularRunStartIndex ) > 1 ) && PWaveCondition && ( HeartRateChange(BeatIndex ) > pvcHeartRateChangeThreshold )  )
+                    
+                    % Comfired and ended
+                    isVentricularPrematureBeat = true;
+                    possibleVentricularRunStart = false;
+                    possibleVentricularRunStartIndex = -1;
+                    
+                else
+                    
+                    % Not a premature ventricular beat
+                    % - clear run
+                    if possibleVentricularRunStart
+                        % if a run was started
+                        % - clear all PVCs
+                        isVentricularPrematureBeat = false;
+                        qrsComplexes.VentricularBeats( double( possibleVentricularRunStartIndex ) : double( BeatIndex ) ) = false;
+                        % - flag down
+                        possibleVentricularRunStart = false;
+                        % - initialize start index
+                        possibleVentruhaicularRunStartIndex = -1;
+                    else
+                        % if a single pvc is detected
+                        isVentricularPrematureBeat = false;
+                    end
+                    
+                end
+                
+            end
+            
+            if ~isVentricularPrematureBeat && possibleVentricularRunStart
+                % if a run was started
+                % - clear all PVCs
+                isVentricularPrematureBeat = false;
+                qrsComplexes.VentricularBeats( double( possibleVentricularRunStartIndex ) : double( BeatIndex ) ) = false;
                 % - flag down
-                qrsComplexes.AtrialBeats( startBeatIndex : beatIndex ) = false;
-                % - end of the run
-                startBeatIndex = -1;
-                startRun = false;
+                possibleVentricularRunStart = false;
+                % - initialize start index
+                possibleVentricularRunStartIndex = -1;
             end
-        end
-    end
-end
-
-%
-%
-% QRS Interval Based Adjustment
-wideQRSPAC = ...
-    ( qrsComplexes.AtrialBeats & qrsComplexes.QRSInterval > 0.120 );
-qrsComplexes.AtrialBeats( wideQRSPAC ) = false;
-qrsComplexes.VentricularBeats( wideQRSPAC ) = true;
-
-%
-%
-% VENTRICULAR BEAT CLASSIFICATION
-% - initialization
-startBeatIndex = - 1;
-startRun = false;
-% - Assessment
-for beatIndex = 1 : ( length( qrsComplexes.R ) - 1 )
-    
-    % Ref Value
-    if beatIndex > 4
-        prematureBeatControl = any( qrsComplexes.VentricularBeats( beatIndex - 4 : beatIndex ) );
-        prematureBeatControl = prematureBeatControl || any( qrsComplexes.AtrialBeats( beatIndex - 4 : beatIndex ) );
-        prematureBeatControl = prematureBeatControl || any( abs( 1 - qrsComplexes.HeartRateChange( beatIndex - 4 : beatIndex ) ) > 0.25 );
-        if ~prematureBeatControl
-            refHeartRate = mean( qrsComplexes.HeartRate( beatIndex - 4 : beatIndex ) );
-        end
-    else
-        refHeartRate = initialHeartRateRef;
-    end
-    
-    %     if qrsComplexes.R( beatIndex ) > 3495.5 * 250
-    %         plot_BeatClassBPM;
-    %         title( num2str( qrsComplexes.VentricularBeats( beatIndex ) ) )
-    %     end
-    
-    % Search for each beat
-    if qrsComplexes.VentricularBeats( beatIndex )
-        % Get the start index
-        if ~startRun
-            startBeatIndex = beatIndex;
-            startRun = true;
-        end
-        % Check for the compensatory pause
-        if qrsComplexes.VentricularBeats( beatIndex + 1 ) && ( beatIndex < ( length( qrsComplexes.R ) - 1 ) ) 
-            continue;
-        else
-            % Check for the heart rate change of the next beat
-            if qrsComplexes.HeartRate( beatIndex + 1 ) > 60 / ( analysisParameters.Pause.ClinicThreshold / 1000 )
-                nextBeatHeartRateChange = qrsComplexes.HeartRate( beatIndex + 1 ) / refHeartRate;
-            else
-                nextBeatHeartRateChange = inf;
-            end
-            % Check for the heart rate change of the initial beat
-            if qrsComplexes.HeartRate( startBeatIndex ) > 60 / ( analysisParameters.Pause.ClinicThreshold / 1000 )
-                initialBeatHeartRateChange = qrsComplexes.HeartRate( startBeatIndex ) / refHeartRate;
-            else
-                initialBeatHeartRateChange = inf;
-            end
-            % If there is a compensatory pause, skip
-            if ( nextBeatHeartRateChange < 0.90 ) && ( initialBeatHeartRateChange > 1.10 )
-                % - end of the run
-                startBeatIndex = -1;
-                startRun = false;
-                continue;
-            else
-                if qrsComplexes.AtrialBeats( beatIndex + 1 )
-                    % - flag down
-                    qrsComplexes.VentricularBeats( startBeatIndex : beatIndex ) = false;
-                    % - end of the run
-                    startBeatIndex = -1;
-                    startRun = false;
-                else
-                    % run length
-                    runBeatDuration = beatIndex - startBeatIndex + 1;
-                    % previous heart rate change mean
-                    runHeartRateChange = mean( qrsComplexes.HeartRate( startBeatIndex : beatIndex ) ) / refHeartRate;
-                    % based on the run length
-                    if ( nextBeatHeartRateChange < 1 ) && ( runBeatDuration > 2 ) && ( runHeartRateChange > 1.25 )
-                        % - end of the run
-                        startBeatIndex = -1;
-                        startRun = false;
-                    else
-                        % - flag down
-                        qrsComplexes.VentricularBeats( startBeatIndex : beatIndex ) = false;
-                        % - end of the run
-                        startBeatIndex = -1;
-                        startRun = false;
+            
+            % - PLOT
+            %             if qrsComplexes.R( BeatIndex ) > 420 * recordInfo.RecordSamplingFrequency
+            %                 disp( [ 'NormalHeartRate: ' num2str( normalBeatHeartRate ) ] )
+            %                 disp( [ 'HeartRate: ' num2str( HeartRate( BeatIndex ) ) ' // HeartRateChange: ' num2str( HeartRateChange( BeatIndex ) ) ] )
+            %                 plotDeveloper_prematureBeats;
+            %             end
+            
+            %% PREMATURE ATRIAL BEATS
+            %%%
+            %%%
+            %%%
+            
+            if ... 
+                    ~ isVentricularPrematureBeat && ...
+                    ...
+                    ~( qrsComplexes.NoisyBeat( BeatIndex ) ) && ...
+                    ...
+                    ( HeartRate( BeatIndex ) > analysisParameters.Tachycardia.ClinicThreshold )
+                
+                % ATRIAL ASSESMENT
+                if ...
+                        ... increased heart rate change
+                        ( ...
+                        ( HeartRateChange( BeatIndex ) > pacHeartRateChangeThreshold ) || ...
+                        ( atrialBasedAbnormalBeat ) ...
+                        ) && ...
+                        ... qrs interval || qrs type with high amplitude
+                        ( ...
+                        ( qrsComplexes.QRSInterval( BeatIndex ) < qrsIntervalThreshold ) || ...
+                        ( atrialBasedAbnormalBeat ) ...
+                        )
+                    
+                    % rise flag
+                    isAtrialPrematureBeat = true;
+                    % get run start
+                    % Start a run
+                    if ~possibleAtrialRunStart
+                        % - beat index
+                        possibleAtrialRunStartIndex = BeatIndex;
                     end
+                    
                 end
+                
+                % CHECK THE UPCOMING BEAT:
+                % if the next beat has a compansatory pause or if it is a pvc beat; start a run
+                % if the next beat does not have the requiered parameters, un-flag it.
+                if ( isAtrialPrematureBeat && ( BeatIndex < length( HeartRate ) ) )
+                    
+                    % Next beat heart rate change: is there a compasantory pause
+                    if HeartRate( BeatIndex + 1 ) > ( 60 / ( analysisParameters.Asystole.ClinicThreshold / 1000 ) )
+                        % if there is no such a longer pause than an asystole threshold
+                        nextBeatHeartRateChange = ( HeartRate( BeatIndex + 1 ) / normalBeatHeartRate );
+                    else
+                        % if there is a longer pause than an asystole threshold
+                        nextBeatHeartRateChange = 1;
+                    end
+                    
+                    if ... ATRIAL RUN
+                            ... upcoming beat heart rate change
+                            ( nextBeatHeartRateChange > pacHeartRateChangeThreshold )
+                        
+                        % Start a run
+                        if ~possibleAtrialRunStart
+                            % - flag up
+                            possibleAtrialRunStart = true;
+                        end
+                        
+                    elseif ... VENTRICULAR RUN ENDS
+                            ( nextBeatHeartRateChange < pacCompansatoryPauseRatio ) ...
+                            || ... CONDITION 2 : Long lasting run
+                            ( ( BeatIndex - possibleAtrialRunStartIndex ) > 4 )
+                        
+                        % Comfired and ended
+                        isAtrialPrematureBeat = true;
+                        possibleAtrialRunStart = false;
+                        possibleAtrialRunStartIndex = -1;
+                        
+                    else
+                        
+                        % Not a premature ventricular beat
+                        % - clear run
+                        if possibleAtrialRunStart
+                            % if a run was started
+                            % - clear all PVCs
+                            isAtrialPrematureBeat = false;
+                            qrsComplexes.AtrialBeats( double( possibleAtrialRunStartIndex ) : double( BeatIndex ) ) = false;
+                            % - flag down
+                            possibleAtrialRunStart = false;
+                            % - initialize start index
+                            possibleAtrialRunStartIndex = -1;
+                        else
+                            % if a single pvc is detected
+                            isAtrialPrematureBeat = false;
+                        end
+                        
+                    end
+                    
+                end
+                
+                if ~isAtrialPrematureBeat && possibleAtrialRunStart
+                    % if a run was started
+                    % - clear all PVCs
+                    isAtrialPrematureBeat = false;
+                    qrsComplexes.AtrialBeats( double( possibleAtrialRunStartIndex ) : double( BeatIndex ) ) = false;
+                    % - flag down
+                    possibleAtrialRunStart = false;
+                    % - initialize start index
+                    possibleAtrialRunStartIndex = -1;
+                end
+                
             end
+            
+            %% CHANGE THRESHOLD
+            
+            if ( BeatIndex > 2 )
+                
+                if ...
+                        ... not a pvc or after a pvc
+                        ~isVentricularPrematureBeat && ...
+                        ( ~any( qrsComplexes.VentricularBeats( BeatIndex - 1 ) ) ) && ...
+                        ... not a pvc or after a pvc
+                        ~isAtrialPrematureBeat && ...
+                        ( ~any( qrsComplexes.AtrialBeats( BeatIndex - 1 ) ) ) && ...
+                        ... heart rate should not be lower the threshold
+                        ( HeartRate( double( BeatIndex ) ) > ( analysisParameters.Bradycardia.ClinicThreshold  ) ) && ...
+                        ... if there is no rapid heart rate change
+                        ( HeartRateChange( BeatIndex ) < 1.25 )
+                    
+                    
+                    % change heart rate level
+                    normalBeatHeartRate = 0.67* normalBeatHeartRate + 0.33 * HeartRate( BeatIndex ) ;
+                    if normalBeatHeartRate < analysisParameters.Bradycardia.ClinicThreshold
+                        normalBeatHeartRate = analysisParameters.Bradycardia.ClinicThreshold;
+                    end
+                    
+                end
+                
+            end
+            
+            %% ANNOTATION
+            
+            qrsComplexes.VentricularBeats( BeatIndex ) = isVentricularPrematureBeat;
+            qrsComplexes.AtrialBeats( BeatIndex ) = isAtrialPrematureBeat;
+            
         end
+        
     end
-end
+
+
 
 % LAST BEAT
 if ~isempty( qrsComplexes.R )

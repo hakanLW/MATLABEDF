@@ -1,11 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Fri Dec 11 13:32:56 2020
+* Date: Wed Oct 27 11:53:14 2021
 * Arguments:
-* "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI_1_0_
-* 0,ClassMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\matlabapideveloper\MatlabAPI_dll\
-* MatlabAPI\for_testing""-v""class{ClassMatlabAPI:C:\GIT\matlabapideveloper\ECGAnalysis.m}
-* "
+* "-B""macro_default""-W""dotnet:MatlabAPI_1_0_0,ClassMatlabAPI,4.0,private""-T""link:lib"
+* "-d""C:\GIT\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_testing""-v""class{ClassMatlabA
+* PI:C:\GIT\matlabapiboosted\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
@@ -24,7 +23,7 @@ namespace MatlabAPI_1_0_0
   /// The ClassMatlabAPI class provides a CLS compliant, MWArray interface to the MATLAB
   /// functions contained in the files:
   /// <newpara></newpara>
-  /// C:\GIT\matlabapideveloper\ECGAnalysis.m
+  /// C:\GIT\matlabapiboosted\ECGAnalysis.m
   /// </summary>
   /// <remarks>
   /// @Version 4.0

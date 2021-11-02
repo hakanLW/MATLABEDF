@@ -63,7 +63,7 @@ classdef ClassPrematureBeats
         
         %% Find Premature Beat Pattern
         
-        function [ PatternInfo ] = FindPrematureBeatPattern ( PrematureBeats, PrematureBeatsStart, PatternType )
+        function [ PatternInfo ] = FindPrematureBeatPattern ( PrematureBeats, PrematureBeatsStart, PatternType ,QRSComplexes)
             
             % Find the given PVC pattern in the PrematureBeats.
             %
@@ -79,6 +79,20 @@ classdef ClassPrematureBeats
             %   .StartBeat
             %   .EndBeat
             %   .BlockIndex
+            
+            
+            NoisyArray = double( QRSComplexes.NoisyBeat);
+         
+            NoisyArray(NoisyArray==1) = 3;
+            
+            NoisyArray= [ NoisyArray; 0; 0; 0 ];
+            PrematureBeats = double(PrematureBeats);
+            
+             for count = 1:length(NoisyArray)
+                 if NoisyArray(count) == 3
+                     PrematureBeats(count)=3;
+                 end
+             end
             
             if all( ~PrematureBeats )
                 
@@ -183,9 +197,23 @@ classdef ClassPrematureBeats
             %   .IsolatedRun
             %   struct VentricularTachy
             
+%             x = find(QRSComplexes.NoisyBeat ==1 & QRSComplexes.VentricularBeats == 1);
+%             y= find(QRSComplexes.NoisyBeat ==1 & QRSComplexes.AtrialBeats == 1);
+            
+%             for i=1:length(QRSComplexes.NoisyBeat)
+%                 if (QRSComplexes.NoisyBeat(i) == 1)
+%                         QRSComplexes.VentricularBeats(i) = 0;
+%                         QRSComplexes.AtrialBeats(i) = 0;
+%                 end
+%             end
+            
+            %x = find(QRSComplexes.NoisyBeat ==1 & QRSComplexes.VentricularBeats == 1);
+            %y= find(QRSComplexes.NoisyBeat ==1 & QRSComplexes.AtrialBeats == 1);
+                
             % Premature Beats
             if type == 'V'
                 % get premature beats
+                
                 selectedPrematureBeats = QRSComplexes.VentricularBeats;
                 if ~isempty( TachyRuns )
                     selectedPrematureBeats( TachyRuns.BeatFlag ) = false;
@@ -245,6 +273,7 @@ classdef ClassPrematureBeats
                 % INITIALIZATION
                 % - preallocation
                 PrematureRuns.PrematureBeats = [ selectedPrematureBeats; 0; 0; 0 ];
+%                 NoiseBeat = [QRSComplexes.NoisyBeat ; 0;0;0];
                 PrematureRuns.TotalBeats = single( 0 );
                 PrematureRuns.TotalRuns = single( 0 );
                 % - heart rate
@@ -252,9 +281,33 @@ classdef ClassPrematureBeats
                 % - get patterns
                 blockEdges = single( ( abs( diff( [ 0; PrematureRuns.PrematureBeats ] ) ) > 0 ) > 0 );
                 blockEdges = single( find(blockEdges == 1) );
+                
+%             blockEdges_temp = single( ( abs( diff( [ 0; PrematureRuns.PrematureBeats ] ) ) > 0 ) > 0 );
+%             blockEdges_temp = single( find(blockEdges_temp == 1) );
+%            
+         
+                %block edges temo deðilse
+%                 k=1;
+%                if ~isempty(blockEdges_temp)
+%                 for i=1:length(blockEdges_temp)
+%                    if ( QRSComplexes.NoisyBeat(blockEdges_temp(i)-1)== 0)
+%                         blockEdges(k,1) = blockEdges_temp(i);
+%                         k=k+1;
+%                    end
+%                 end
+%                end
+            
+% %               
                 PrematureBeatsStart = single( blockEdges( 1:2:length( blockEdges ) ) );
-                PrematureBeatsEnd = single( blockEdges( 2:2:length( blockEdges ) ) ) - 1;
+                PrematureBeatsEnd = single( blockEdges( 2:2:length( blockEdges ) ) )-1;
                 PrematureBeatsDuration = PrematureBeatsEnd - PrematureBeatsStart + 1;
+                
+%                 PrematureBeatsStart = single( blockEdges( 1:2:length( blockEdges ) ) );
+%                 PrematureBeatsEnd = single( blockEdges( 2:2:length( blockEdges ) ) )-1;
+%                 
+%                 t = min( length(PrematureBeatsStart), length(PrematureBeatsEnd) );
+%                 PrematureBeatsDuration = PrematureBeatsEnd(1:t) - PrematureBeatsStart(1:t) + 1;
+
                 
                 %% SALVO
                 
@@ -460,7 +513,7 @@ classdef ClassPrematureBeats
                 %% QUADRIGEMINY
                 
                 % Get Quadrigeminy
-                [ PrematureRuns.QuadrigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Quadrigeminy' );
+                [ PrematureRuns.QuadrigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Quadrigeminy' , QRSComplexes);
                 % Clear
                 [ PrematureRuns.PrematureBeats, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration ] = ...
                     ClassPrematureBeats.ClearRun( PrematureRuns.PrematureBeats, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration, PrematureRuns.QuadrigeminyRun);
@@ -473,7 +526,7 @@ classdef ClassPrematureBeats
                 %% TRIGEMINY
                 
                 % Get Trigeminy
-                [ PrematureRuns.TrigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Trigeminy' );
+                [ PrematureRuns.TrigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Trigeminy' , QRSComplexes);
                 % Clear
                 [ PrematureRuns.PrematureBeats, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration ] = ...
                     ClassPrematureBeats.ClearRun( PrematureRuns.PrematureBeats, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration, PrematureRuns.TrigeminyRun);
@@ -486,7 +539,7 @@ classdef ClassPrematureBeats
                 %% BIGEMINY
                 
                 % Get Bigeminy
-                [ PrematureRuns.BigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Bigeminy' );
+                [ PrematureRuns.BigeminyRun ] = ClassPrematureBeats.FindPrematureBeatPattern ( PrematureRuns.PrematureBeats, PrematureBeatsStart, 'Bigeminy', QRSComplexes );
                 % Clear
                 [ ~, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration ] = ...
                     ClassPrematureBeats.ClearRun( PrematureRuns.PrematureBeats, PrematureBeatsStart, PrematureBeatsEnd, PrematureBeatsDuration, PrematureRuns.BigeminyRun);

@@ -341,6 +341,7 @@ for beatIndex = 1 : length( noiseBeatIndexes )
         );
     % - flag
     noiseSample( double( startPoint ) : double( endPoint ) ) = true;
+
 end
 
 % CLEAR QRS

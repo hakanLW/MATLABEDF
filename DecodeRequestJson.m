@@ -39,6 +39,9 @@ else
         [ RecordInfo, MatlabAPIConfig ] = GetRecordInfo( RequestPackets, MatlabAPIConfig );
         % - Analysis Parameters
         [ AnalysisParameters ] = GetAnalysisParameters( RequestPackets, RecordInfo );
+        % Analysis Channel
+        MatlabAPIConfig.AnalysisChannel = ...
+        GetAnalysisChannel( RecordInfo, MatlabAPIConfig,AnalysisParameters );
         % - Alarm Button
         [ AlarmButton ] = GetAlarmButton( RequestPackets, RecordInfo );
         % - Clear
@@ -117,10 +120,16 @@ if any( strcmp( recordInfo.ActiveChannels, "Lead1" ) ) && any( strcmp( recordInf
     recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'aVR';
     recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'aVL';
     recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'aVF';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V1';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V2';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V3';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V4';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V5';
+    recordInfo.ActiveSignals{ length( recordInfo.ActiveSignals ) + 1 } = 'V6';
+   
+    
 end
-% Analysis Channel
-matlabAPIConfig.AnalysisChannel = ...
-    GetAnalysisChannel( recordInfo, matlabAPIConfig );
+
 
 end
 
@@ -171,7 +180,7 @@ if ~isempty( recordInfo.AnalysisStartPoint )
     
     % DEFINING THE GIVEN INTERVALs
     % If there is a list of interval without signal
-    for intervalIndex = 1 : length( analysisParameters.IntervalWithoutSignal )
+    for intervalIndex = 1 : length( analysisParameters.IntervalWithoutSignal)
         if intervalIndex == length( analysisParameters.IntervalWithoutSignal )
             % [2] pop the empty interval
             analysisParameters.IntervalWithoutSignal(intervalIndex) = [ ];
@@ -221,7 +230,9 @@ else
     analysisParameters.IntervalWithoutSignal.Type = deal( 'Given' );
     
 end
-
+% % - Channel
+% analysisParameters.Channel = ...
+%     string( analysisParameters.Channel );
 end
 
 
@@ -233,6 +244,9 @@ function [ matlabAPIConfig ] = GetMatlabAPIConfig( RequestPackets, FileAdress, A
 matlabAPIConfig = RequestPackets.MatlabAPIConfigRequest;
 matlabAPIConfig.FileAdress = FileAdress;
 matlabAPIConfig.AnalysisStartDateTime = AnalysisStartDateTime;
+matlabAPIConfig.ReAnalysis = RequestPackets.ReAnalysis;
+matlabAPIConfig.PaceMaker = RequestPackets.PaceMaker;
+
 % - Enviroment
 if isfield( RequestPackets, 'EnvironmentConfig' )
     matlabAPIConfig.Environment.isTest = RequestPackets.EnvironmentConfig.Environment == 'T';
@@ -513,25 +527,30 @@ end
 if ~electrodeStateList.RA || ~electrodeStateList.LL
     channelList(strcmp(channelList, 'Lead2' ), :) = [ ];
 end
-% - Lead3
-channelList(strcmp(channelList, 'Lead3' ), :) = [ ];
-% - aVL
-channelList(strcmp(channelList, 'aVL' ), :) = [ ];
-% - aVF
-channelList(strcmp(channelList, 'aVF' ), :) = [ ];
-% - aVR
-channelList(strcmp(channelList, 'aVR' ), :) = [ ];
 
+% if (~electrodeStateList.RA || ~electrodeStateList.LA  || ~electrodeStateList.LL)
+% % - Lead3
+% channelList(strcmp(channelList, 'Lead3' ), :) = [ ];
+% % - aVL
+% channelList(strcmp(channelList, 'aVL' ), :) = [ ];
+% % - aVF
+% channelList(strcmp(channelList, 'aVF' ), :) = [ ];
+% % - aVR
+% channelList(strcmp(channelList, 'aVR' ), :) = [ ];
+% end
 
 end
 
 
 %% SubFunction : Analysis Channel
 
-function analysisChannel = GetAnalysisChannel( recordInfo, matlabAPIConfig )
+function analysisChannel = GetAnalysisChannel( recordInfo, matlabAPIConfig,analysisParameters )
 
 if isempty( recordInfo.ActiveChannels )
     error( 'There is no channel to be used in the analysis.' )
+end
+if ~isempty(analysisParameters.Channel)
+     analysisChannel=analysisParameters.Channel;
 elseif any( strcmp( recordInfo.ActiveChannels, 'Lead2' ) )
     analysisChannel = 'Lead2';
 elseif any( strcmp( recordInfo.ActiveChannels, 'V5' ) )
@@ -548,26 +567,3 @@ if matlabAPIConfig.IsLogWriteToConsole
 end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

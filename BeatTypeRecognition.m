@@ -18,9 +18,9 @@ if ~isempty( qrsComplexes.R )
     % Normal beats
     beatTypes( 1:end ) = "N_";
     % Ventricular Beats
-    beatTypes( qrsComplexes.VentricularBeats == true | qrsComplexes.VTBeats ) = "V_";
+    beatTypes( qrsComplexes.VentricularBeats == true  ) = "V_"; %| qrsComplexes.VTBeats
     % Atrial Beats
-    beatTypes( qrsComplexes.AtrialBeats == true | qrsComplexes.SVTBeats == true ) = "A_";
+    beatTypes( qrsComplexes.AtrialBeats == true  ) = "A_"; % | qrsComplexes.SVTBeats == true
     % Noise Beats
     beatTypes( qrsComplexes.NoisyBeat == true ) = "X_";
     

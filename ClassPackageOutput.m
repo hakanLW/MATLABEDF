@@ -21,6 +21,7 @@ classdef ClassPackageOutput
     % > AlarmButtonPacket
     % > NoisePacket
     % > BeatDetailsPacket
+    % >PaceMakerPacket
     % > JsonPacket
     %
     
@@ -257,8 +258,11 @@ classdef ClassPackageOutput
             
         end
         
+
+        
         
         %% HRV Packet
+         
         
         function hrvPacket = HRVariabilityPacket( hrvAnalysisResult, apiInfo )
             % HRV Packet
@@ -295,7 +299,7 @@ classdef ClassPackageOutput
             
         end
         
-        
+       
         %% ST Segment Analysis Packet
         
         function stSegmentAnalysisPacket = STSegmentAnalysisPacket ( qrsComplexes, recordInfo, apiInfo )
@@ -1760,6 +1764,17 @@ classdef ClassPackageOutput
             
         end
         
+        %% Pace Maker Packet
+        %
+        function paceMakerPacket =PaceMakerPacket( pace )
+            if ~isempty( pace )
+                paceMakerPacket.Pace=pace;
+                paceMakerPacket.Pace(end+1)=deal(int32(0));     
+            else
+                paceMakerPacket.Pace=string(nan);
+            end
+        end
+        %% 
         
         %% Json Packet
         % Json Packet
@@ -1789,7 +1804,7 @@ classdef ClassPackageOutput
             % json string
             jsonPacket = jsonencode( jsonPacket  );
             jsonPacket = string( jsonPacket );
-            
+            jsonPacket = strcat(jsonPacket, '  ');
             % write to text file
             fileAdress = strrep(fileAdress, '_RawSignal.bin' , '_MatlabAPIReport.json' );
             % open file
@@ -1878,6 +1893,7 @@ RunAverageHeartRate = num2cell( Run.AverageHeartRate );
 ClassList = Class.(Name);
 
 end
+
 
 
 %% HRV GRAPH
@@ -2036,10 +2052,11 @@ function [ ClassList ] = BeatClassification(  qrsComplexes, samplingFreq )
 % Get Data
 beatPoints = qrsComplexes.R;
 beatFormType = qrsComplexes.BeatFormType;
+AverageHeartRateDetectionResults=  AverageHeartRateDetection(qrsComplexes, qrsComplexes.HeartRate);
 
 if ~isempty( beatFormType )
     
-    % Initialization
+%    Initialization
     beatFormType = char( beatFormType );
     
     % number of beats
@@ -2048,6 +2065,16 @@ if ~isempty( beatFormType )
     % heart rates
     beatBPM = zeros( length( beatPoints ),1 );
     beatBPM( 2:end ) = ClassRhythmAnalysis.CalculateHeartRate(beatPoints, samplingFreq);
+    %newHeartRate
+  % newbeatBPM = zeros( length( beatPoints),1 );
+    newbeatBPM= AverageHeartRateDetectionResults.newHeartRate;
+%  %MinimumHeartRateBeatIndex
+%    MinimumHeartRateBeatIndex = AverageHeartRateDetectionResults.MinimumHeartRateBeatIndex;
+%    %MaximumHeartRateBeatIndex
+%    MaximumHeartRateBeatIndex = AverageHeartRateDetectionResults.MaximumHeartRateBeatIndex;
+    
+  
+    
     
     % convert to cell
     % - beat index
@@ -2056,6 +2083,12 @@ if ~isempty( beatFormType )
     beatPoints = num2cell( beatPoints );
     % - beat bpm
     beatBPM = num2cell( beatBPM );
+    %new beatbpm
+     newbeatBPM = num2cell( newbeatBPM );
+    % MinimumHeartRateBeatIndex
+%     MinimumHeartRateBeatIndex=num2cell(MinimumHeartRateBeatIndex);
+%     %MaximumHeartRateBeatIndex
+%     MaximumHeartRateBeatIndex=num2cell(MaximumHeartRateBeatIndex);
     % - beat type
     beatType = num2cell( beatFormType( : ,1) );
     % - beat form
@@ -2065,6 +2098,10 @@ if ~isempty( beatFormType )
     end
     beatForm = num2cell( beatFormType );
     
+    %P Start Point
+    pStartPoint = num2cell(qrsComplexes.P.StartPoint);
+    %T End Pint
+    tEndPoint = num2cell(qrsComplexes.T.EndPoint);
     % ListName
     Name = 'BeatDetails';
     
@@ -2084,7 +2121,21 @@ if ~isempty( beatFormType )
     % - beat bpm
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).HeartRate ] = deal( beatBPM{:} );
     [ Class.(Name)(numberOfBeats + 1).HeartRate ] = deal( int32(0) );
-    
+    %- newbeatbpm
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).AverageHeartRate ] = deal( newbeatBPM{:} );
+    [ Class.(Name)(numberOfBeats + 1).AverageHeartRate ] = deal( int32(0) );
+    %pStartPoint
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).PStartPoint ] = deal( pStartPoint{:} );
+    [ Class.(Name)(numberOfBeats + 1).PStartPoint ] = deal( int32(0) );
+    %tEndPoint
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).TEndPoint ] = deal( tEndPoint{:} );
+    [ Class.(Name)(numberOfBeats + 1).TEndPoint ] = deal( int32(0) );
+%     % MinimumHeartRateBeatIndex
+%     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).MinimumHeartRateBeatIndex ] = deal( MinimumHeartRateBeatIndex{:} );
+%     [ Class.(Name)(numberOfBeats + 1).MinimumHeartRateBeatIndex ] = deal( int32(0) );
+%     % MaximumHeartRateBeatIndex
+%     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).MaximumHeartRateBeatIndex ] = deal( MaximumHeartRateBeatIndex{:} );
+%     [ Class.(Name)(numberOfBeats + 1).MaximumHeartRateBeatIndex ] = deal( int32(0) );
     % - beat bpm
     for i = 1 : numberOfBeats + 1
         

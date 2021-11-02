@@ -168,7 +168,9 @@ classdef ClassFilter
                     %%- filter coefficients
                     [filterNumCoef, filterDenCoef] = calculateFilterCoeffcients(cutoffFreqHz, order, samplingFreqHz, 'bandpass');
                     %%- filtering signal
-                    output = filter(filterNumCoef,filterDenCoef,input);
+                    output= filter(filterNumCoef,filterDenCoef,input);
+
+
                     
             end % switch filterType
             

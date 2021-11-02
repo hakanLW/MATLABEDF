@@ -155,6 +155,11 @@ if ~isempty( qrsComplexes.R ) && ( signalDuration > 0 )
             hrvResults.minHR( count ) = 60 / ( hrvResults.maxRR( count ) / 1000 );
             % segment count
             hrvResults.SegmentCount = count;
+           
+            %last ten beats mean heart rate
+            
+  
+            
             
         end
         
