@@ -1766,8 +1766,14 @@ classdef ClassPackageOutput
         
         %% Pace Maker Packet
         %
-        function paceMakerPacket =PaceMakerPacket( pace )
-            if ~isempty( pace )
+        function paceMakerPacket =PaceMakerPacket( pace,SignalNoisePoints )
+           if ~isempty( pace )
+              for i=1:length(pace)
+                 if SignalNoisePoints(pace(i)) ==1
+                   pace(i)=0;
+                 end
+              end
+               pace(pace==0) = [];
                 paceMakerPacket.Pace=pace;
                 paceMakerPacket.Pace(end+1)=deal(int32(0));     
             else

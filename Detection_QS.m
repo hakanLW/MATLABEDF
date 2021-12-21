@@ -413,7 +413,7 @@ if ~isempty( qrsComplexes.R )
             
             % DELETION OF THE T WAVES DETECTED AS QRS
             % Assesment: Based on the angle change.
-            if ~removeBeat && ~isempty( previousBeat ) && ( peak > 2 ) && ( peak ~= numbBeats ) && exist('meanQRSAmplitude','var') && ( meanQRSAmplitude > 0.50 )
+            if ~removeBeat && ~isempty( previousBeat ) && ( peak > 2 ) && ( peak ~= numbBeats ) && exist('meanQRSAmplitude','var')  && ( meanQRSAmplitude > 0.50 )
                 
                 if ... RR Interval Condition
                         ( qrsComplexes.R( peak ) - qrsComplexes.R(previousBeat) ) <= ( 0.300*recordInfo.RecordSamplingFrequency )

@@ -31,7 +31,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 9 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 2 );
+ResponseInfo.Version.Build = int32( 3);
 
 % Analysis Info
 disp(' ')
@@ -719,7 +719,7 @@ JsonResponsePackets.AlarmButtonResponse = ClassPackageOutput.AlarmButtonPacket( 
 JsonResponsePackets.BeatDetailsResponse = ClassPackageOutput.BeatDetailsPacket( QRSComplexes, HolterRecordInfoRequest.RecordSamplingFrequency );
 
 %-PaceMakerResponse
-JsonResponsePackets.PaceMakerResponse = ClassPackageOutput.PaceMakerPacket( Pace );
+JsonResponsePackets.PaceMakerResponse = ClassPackageOutput.PaceMakerPacket( Pace,SignalNoisePoints );
 
 %% Json Encode
 
@@ -748,7 +748,7 @@ disp( [ 'MatlabAPI Version: ' ...
     num2str( ResponseInfo.Version.Major ) '.' num2str( ResponseInfo.Version.Minor ) '.' num2str( ResponseInfo.Version.Build ) ] )
 
 
-% Plot
+% %%Plot
 % 
 % %%%%%%%%%
 % %% Analysis Result
@@ -757,7 +757,7 @@ disp( [ 'MatlabAPI Version: ' ...
 % PlotWaves( ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ), QRSComplexes, JsonResponsePackets );
 % disp('# Completed...')
 % disp(' ')
-% 
+
 
 %% End of the Analysis
 

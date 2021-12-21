@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1301972777" file="C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI.prj" location="C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="1301972777" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI_1_0_0</param.appname>
     <param.icon />
     <param.icons />
@@ -54,7 +54,7 @@ string JsonResponsePackets
     <param.net.tsa.namespace />
     <param.net.tsa.superclass>ClassMatlabAPI</param.net.tsa.superclass>
     <param.net.tsa.metadata />
-    <param.net.tsa.metadata.assembly>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted</param.net.tsa.metadata.assembly>
+    <param.net.tsa.metadata.assembly>C:\Users\Lenovo\Documents\MATLAB</param.net.tsa.metadata.assembly>
     <param.net.saved.interface />
     <unset>
       <param.icon />
@@ -100,56 +100,56 @@ string JsonResponsePackets
       <param.net.saved.interface />
     </unset>
     <fileset.exports>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ECGAnalysis.m</file>
+      <file>C:\GIT\matlabapideveloper\ECGAnalysis.m</file>
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
         <entity.class name="ClassMatlabAPI">
-          <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ECGAnalysis.m</file>
+          <file>C:\GIT\matlabapideveloper\ECGAnalysis.m</file>
         </entity.class>
       </entity.package>
     </fileset.classes>
     <fileset.resources />
     <fileset.depfun>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\_JsonRequest.txt</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\AverageHeartRateDetection.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\BeatClassification.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\BeatMorphology.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\BeatTypeRecognition.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassBeatDetection.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassChangeChannel.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassDatetimeCalculation.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassFilter.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassNotchCharacteristic.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassNotchEvaluation.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassPackageOutput.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassPTDetection.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassRhythmAnalysis.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassSlope.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassTypeConversion.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ClassUnusualSignalDetection.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\DecodeRequestJson.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_Beat.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_PT.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_Q.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_QS.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_S.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\Detection_VFib.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ECGBinary2Structure.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ECGFilterSignal.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ECGIntervalSegmentCalculation.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\HRVAnalysis.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\NoiseBeatClassification.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\PaceDetector.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\PrematureBeatClassification.m</file>
-      <file>C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\ReSampleECG.m</file>
+      <file>C:\GIT\matlabapideveloper\_JsonRequest.txt</file>
+      <file>C:\GIT\matlabapideveloper\AverageHeartRateDetection.m</file>
+      <file>C:\GIT\matlabapideveloper\BeatClassification.m</file>
+      <file>C:\GIT\matlabapideveloper\BeatMorphology.m</file>
+      <file>C:\GIT\matlabapideveloper\BeatTypeRecognition.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassBeatDetection.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassChangeChannel.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassDatetimeCalculation.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassFilter.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassNotchCharacteristic.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassNotchEvaluation.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassPackageOutput.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassPTDetection.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassRhythmAnalysis.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassSlope.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassTypeConversion.m</file>
+      <file>C:\GIT\matlabapideveloper\ClassUnusualSignalDetection.m</file>
+      <file>C:\GIT\matlabapideveloper\DecodeRequestJson.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_Beat.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_PT.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_Q.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_QS.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_S.m</file>
+      <file>C:\GIT\matlabapideveloper\Detection_VFib.m</file>
+      <file>C:\GIT\matlabapideveloper\ECGBinary2Structure.m</file>
+      <file>C:\GIT\matlabapideveloper\ECGFilterSignal.m</file>
+      <file>C:\GIT\matlabapideveloper\ECGIntervalSegmentCalculation.m</file>
+      <file>C:\GIT\matlabapideveloper\HRVAnalysis.m</file>
+      <file>C:\GIT\matlabapideveloper\NoiseBeatClassification.m</file>
+      <file>C:\GIT\matlabapideveloper\PaceDetector.m</file>
+      <file>C:\GIT\matlabapideveloper\PrematureBeatClassification.m</file>
+      <file>C:\GIT\matlabapideveloper\ReSampleECG.m</file>
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0Native.dll" optional="false">C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0Native.dll</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0.dll" optional="false">C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0.dll</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="readme.txt" optional="true">C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0_overview.html" optional="false">C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0_overview.html</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0_overview.html" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0_overview.html</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0Native.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0Native.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="readme.txt" optional="true">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
