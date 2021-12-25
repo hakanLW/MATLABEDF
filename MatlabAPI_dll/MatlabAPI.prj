@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1301972777" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\Users\Lenovo\Desktop\matlabduzeltme\matlabapiboosted\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="1164026080" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI_1_0_0</param.appname>
     <param.icon />
     <param.icons />

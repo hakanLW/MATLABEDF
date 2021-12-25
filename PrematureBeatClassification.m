@@ -143,14 +143,30 @@ for beatIndex = 1 : ( length( qrsComplexes.R ) - 1 )
         end
     end
 end
+%        if meanQRSAmplitude < 0.5
+%                 % dont care about the morphology
+%                 if qrsComplexes.QRSAmplitude( BeatIndex ) < 0.5
+%                     qrsComplexes.Type( BeatIndex ) = abs( qrsComplexes.Type( BeatIndex ) );
+%                 end
+%                 % increase the threshold
+%                 pvcHeartRateChangeThreshold = single( 1.30 );
+%                 pacHeartRateChangeThreshold = single( 1.50 );
+%                 pvcCompansatoryPauseRatio = single( 0.97 );
+%                 pacCompansatoryPauseRatio = single( 0.97 );
+%             else
+%                 % default thresholds
+%                 pvcHeartRateChangeThreshold = single( 1.10 );
+%                 pacHeartRateChangeThreshold = single( 1.25 );
+%                 pvcCompansatoryPauseRatio = single( 0.91 );
+%                 pacCompansatoryPauseRatio = single( 0.91 );
+%             end
 
-%
-%
+% 
 % QRS Interval Based Adjustment
-wideQRSPAC = ...
-    ( qrsComplexes.AtrialBeats & qrsComplexes.QRSInterval > 0.120 );
-qrsComplexes.AtrialBeats( wideQRSPAC ) = false;
-qrsComplexes.VentricularBeats( wideQRSPAC ) = true;
+% wideQRSPAC = ...
+%     ( qrsComplexes.AtrialBeats & qrsComplexes.QRSInterval > 0.120 );
+% qrsComplexes.AtrialBeats( wideQRSPAC ) = false;
+% qrsComplexes.VentricularBeats( wideQRSPAC ) = true;
 
 %
 %
@@ -237,6 +253,40 @@ for beatIndex = 1 : ( length( qrsComplexes.R ) - 1 )
     end
 end
 
+%     atr=zeros(length(find(cluster==2)),1);
+%     vtr=zeros(length(find(cluster==1)),1);
+% else
+%     atr=zeros(length(find(cluster==1)),1);
+%     vtr=zeros(length(find(cluster==2)),1);
+% end
+
+    
+
+
+for k =2:length(qrsComplexes.NoisyBeat)
+    if (qrsComplexes.AtrialBeats(k) ==1 && qrsComplexes.NoisyBeat(k-1)==1) 
+        qrsComplexes.AtrialBeats(k)=0;
+    end
+      if (qrsComplexes.VentricularBeats(k) ==1 && qrsComplexes.NoisyBeat(k-1)==1)
+        qrsComplexes.VentricularBeats(k)=0;
+     end
+end
+% RRRInterval=zeros(length(qrsComplexes.R),1);
+% % error=0.1;
+% for r =3:length(qrsComplexes.R)-3
+%     RRRInterval(r)=...
+%         round(((qrsComplexes.R(r+2)-qrsComplexes.R(r)))/...
+%         HolterRecordInfoRequest.RecordSamplingFrequency);
+% end
+% 
+% for c=2:length(RRRInterval)
+%     if (qrsComplexes.AtrialBeats(c) ==1) && ...
+%             ((RRRInterval(c-1)==RRRInterval(c+1)) && (RRRInterval(c-1)==RRRInterval(c+1)))
+%         qrsComplexes.AtrialBeats(c)=false;
+%         qrsComplexes.VentricularBeats(c)=true;
+%     end
+% end
+
 % LAST BEAT
 if ~isempty( qrsComplexes.R )
     % - atrial beats
@@ -246,4 +296,7 @@ if ~isempty( qrsComplexes.R )
 end
 
 end
+
+    
+
 

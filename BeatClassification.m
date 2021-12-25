@@ -125,8 +125,15 @@ end; clear numbMorph morphBeatIndex morphIndex morphHeartRateChange
 %
 % PREMATURE BEATS
 % - possible ventricular morphs
-possibleVentricularMorphs = ...
+
+if normalQRSInterval <0.08
+    QRSChange=(normalQRSInterval*0.120)/0.9;
+    possibleVentricularMorphs = ...
+    ( ( qrsMorphologies.BeatInterval > QRSChange) & ( qrsMorphologies.HeartRateChange > 1.15 ) );
+else
+    possibleVentricularMorphs = ...
     ( ( qrsMorphologies.BeatInterval > 0.120 ) & ( qrsMorphologies.HeartRateChange > 1.15 ) );
+end
 % - initialization
 qrsComplexes.VentricularBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
 qrsComplexes.AtrialBeats = zeros( length( qrsComplexes.R ), 1, 'logical' );
@@ -135,9 +142,9 @@ for morphIndex = 1 : length( possibleVentricularMorphs )
         qrsComplexes.VentricularBeats( qrsComplexes.BeatMorphology == morphIndex - 1 ) = true;
     end
 end; clear morphIndex
-if normalQRSInterval < 0.110
-    qrsComplexes.VentricularBeats( (qrsComplexes.QRSInterval >= 0.120 ) & ( heartRateChange >= 1.15 ) ) = true;
-end
+% if normalQRSInterval < 0.110
+%     qrsComplexes.VentricularBeats( (qrsComplexes.QRSInterval >= 0.120 ) & ( heartRateChange >= 1.15 ) ) = true;
+% end
 % Atrial Beats
 qrsComplexes.AtrialBeats( ~qrsComplexes.VentricularBeats & ( heartRateChange > 1.20 ) & ( heartRate > 90 ) ) = true;
 

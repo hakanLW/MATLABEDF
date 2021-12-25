@@ -1,7 +1,7 @@
 {
 	"HolterRecordInfoRequest": {
-		"RecordStartTime": "2021-10-27T13:41:31.000Z",
-		"RecordEndTime": "2021-10-28T13:21:41.000Z",
+		"RecordStartTime": "2021-12-16T10:54:00.000Z",
+		"RecordEndTime": "2021-12-17T09:24:37.000Z",
 		"RecordSamplingFrequency": 250,
 		"ChannelList": [
 			"V5",
@@ -10,7 +10,7 @@
 		],
 		"EcgElectrodeStateList": [
 			{
-				"MeasurementDateTime": "2021-10-27T13:41:31.000Z",
+				"MeasurementDateTime": "2021-12-16T10:54:00.000Z",
 				"CableSetType": 6,
 				"ProbeStatus": {
 					"V1": false,
@@ -71,8 +71,8 @@
 		"ActivityPeriod": [],
 		"IntervalWithoutSignal": [
 			{
-				"StartTime": "2021-10-28T02:59:59.000Z",
-				"EndTime": "2021-10-28T03:00:00.000Z"
+				"StartTime": "2021-12-16T23:58:48.000Z",
+				"EndTime": "2021-12-17T00:00:00.000Z"
 			}
 		],
 		"Channel": "Lead2"
@@ -83,7 +83,7 @@
 	"AlarmButtonRequest": null,
 	"EnvironmentConfig": {
 		"Environment": null,
-		"ChannelDataPath": "99518314976-20211028161550\"
+		"ChannelDataPath": "9581-20211221163013\"
 	},
 	"ReAnalysis": false,
 	"PaceMaker": false
