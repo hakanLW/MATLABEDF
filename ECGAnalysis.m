@@ -31,7 +31,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 9 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 3);
+ResponseInfo.Version.Build = int32( 5);
 
 % Analysis Info
 disp(' ')
@@ -551,6 +551,8 @@ end
 %     toc
 %     disp(' ')
 % end
+[QRSComplexes] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
+% [QRSComplexes] = PrematureBeatEvaulation2( QRSComplexes );
 
 
 % Beat Type
@@ -594,6 +596,7 @@ if MatlabAPIConfigRequest.IsLogWriteToConsole
     toc
     disp(' ')
 end
+
 
 
 %% Generate Response Packets
@@ -740,7 +743,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: ' ...
+disp( [ 'Analysis is completed: *** cross correlation VA KARISIMI***' ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )
