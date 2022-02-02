@@ -489,7 +489,7 @@ classdef ClassUnusualSignalDetection
             end
             
             % New Heart Rate
-            qrsComplexes.HeartRate = [ 0; ClassRhythmAnalysis.CalculateHeartRate( qrsComplexes.R, 250 ) ];
+            qrsComplexes.HeartRate = [ 0; ClassRhythmAnalysis.CalculateHeartRate( qrsComplexes.R, recordInfo.RecordSamplingFrequency ) ];
             % Premature beat assesment based on new heart rate
             % - pvc
             pvcBeats = find( qrsComplexes.VentricularBeats );

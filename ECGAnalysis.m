@@ -29,9 +29,12 @@ JsonResponsePackets = [ ];
 format longG
 
 % Versions
-ResponseInfo.Version.Major = int32( 9 );
+ResponseInfo.Version.Major = int32( 10 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 5);
+ResponseInfo.Version.Build = int32( 0);
+
+disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
+
 
 % Analysis Info
 disp(' ')
@@ -295,21 +298,21 @@ end
     
 
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%
-% % PREMATURE BEAT CLASSIFICATION
-% %%%%%%%%%%%%%%%%%%%%%%%%%
-if MatlabAPIConfigRequest.IsLogWriteToConsole
-    disp( 'Premature beat classifications are being extracted: ' )
-    tic
-end
-QRSComplexes = PrematureBeatClassification(QRSComplexes, ...
-    AnalysisParametersRequest );
-if MatlabAPIConfigRequest.IsLogWriteToConsole
-    disp('# Completed...')
-    toc
-    disp( ' ' )
-end
-    
+% % %%%%%%%%%%%%%%%%%%%%%%%%%
+% % % PREMATURE BEAT CLASSIFICATION
+% % %%%%%%%%%%%%%%%%%%%%%%%%%
+% if MatlabAPIConfigRequest.IsLogWriteToConsole
+%     disp( 'Premature beat classifications are being extracted: ' )
+%     tic
+% end
+% QRSComplexes = PrematureBeatClassification(QRSComplexes, ...
+%     AnalysisParametersRequest );
+% if MatlabAPIConfigRequest.IsLogWriteToConsole
+%     disp('# Completed...')
+%     toc
+%     disp( ' ' )
+% end
+%     
 
 
 
@@ -551,8 +554,18 @@ end
 %     toc
 %     disp(' ')
 % end
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    tic
+    disp('Morph and Template Based Premature Beat Detection ')
+end
 [QRSComplexes] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
-% [QRSComplexes] = PrematureBeatEvaulation2( QRSComplexes );
+
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    disp('# Completed...')
+    toc
+    disp(' ')
+end
+
 
 
 % Beat Type
@@ -743,7 +756,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** cross correlation VA KARISIMI***' ...
+disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ***' ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

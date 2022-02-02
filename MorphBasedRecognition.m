@@ -1,8 +1,10 @@
 function [ qrsComplexes ] = MorphBasedRecognition( qrsComplexes,ecgSignal )
+
+%% HEART RATE CHANGE %%
 heartRate=qrsComplexes.HeartRate;
 heartRate(1:10)=(mean(heartRate(qrsComplexes.NoisyBeat==0)));
 deNoisyBeats=(qrsComplexes.NoisyBeat==0);
-% qrsComplexesVetricularBeats( qrsComplexes.QRSInterval>= single( 0.120 ))=1;
+
 
 for i =1:length(heartRate)
     if deNoisyBeats(i) == 0
@@ -87,7 +89,7 @@ for d =11:length(tL)
        end
     end
 end
-        
+ %% ECTOPICS DETECTION       
 ectopics=zeros(length(hrChange),1,'logical');
 ectopics((single(hrChange) >single(1.15) & single( hrChange)<single(3.5)))=true; 
 ectopics(qrsComplexes.NoisyBeat==true)=false;
@@ -117,7 +119,7 @@ end
 %     timeDiff = SampleDiff/250;
 % %%%
 
-
+%% PREMATURE BEAT CLASSIFICATION
 possibleVentricular=zeros(length(qrsComplexes.R),1);
 
 NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 & qrsComplexes.P.EndPoint>1 & qrsComplexes.T.StartPoint>1 & qrsComplexes.T.EndPoint>1);
@@ -147,14 +149,14 @@ NormalTemplate=ecgSignal((qrsComplexes.R(N)-40):(qrsComplexes.R(N)+90));
 for i =1:length(qrsComplexes.R)
      TargetTemplate=ecgSignal((qrsComplexes.R(i)-40):(qrsComplexes.R(i)+90));
 %     plot(TargetTemplate)
-     [R,P,RL,RU] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
+     [R,~,~,~] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
      if R(1,2) <=0.90
          possibleVentricular(i)=true;   
      end
 end
 
-  disp('# REFERENCE BEAT...')
-  N
+  disp('### REFERENCE BEAT ###')
+  disp(N)
   
   
 % 
@@ -162,8 +164,8 @@ end
 zeros(length(qrsComplexes.R),1);
 qrsComplexes.AtrialBeats=[];
 qrsComplexes.VentricularBeats=[];
-qrsComplexes.AtrialBeats=zeros(length(qrsComplexes.R),1);
-qrsComplexes.VentricularBeats=zeros(length(qrsComplexes.R),1);
+qrsComplexes.AtrialBeats=zeros(length(qrsComplexes.R),1,'logical');
+qrsComplexes.VentricularBeats=zeros(length(qrsComplexes.R),1,'logical');
 qrsComplexes.VentricularBeats=(possibleVentricular==1 & qrsComplexes.NoisyBeat==0 & ectopics==1);
 qrsComplexes.AtrialBeats=(ectopics==1 & possibleVentricular==false  & qrsComplexes.NoisyBeat==0);
 for j =2:length(qrsComplexes.R)-1
@@ -174,4 +176,5 @@ for j =2:length(qrsComplexes.R)-1
         qrsComplexes.AtrialBeats(j+1)=false;
     end
 end
+
 end

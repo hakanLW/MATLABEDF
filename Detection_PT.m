@@ -398,10 +398,10 @@ if ~isempty( qrsComplexes.R )
     qrsComplexes.SecondPWave = possibleSecondPWave;
     % OUTPUT: Noisy Beat
     qrsComplexes.NoisyBeat = noisyBeat;
-    % AtrialBeats
-    qrsComplexes.AtrialBeats( qrsComplexes.P.PeakPoint > 1 ) = false;
-    % VentriculerBeats
-    qrsComplexes.VentricularBeats( qrsComplexes.P.PeakPoint > 1 ) = false;
+%     % AtrialBeats
+%     qrsComplexes.AtrialBeats( qrsComplexes.P.PeakPoint > 1 ) = false;
+%     % VentriculerBeats
+%     qrsComplexes.VentricularBeats( qrsComplexes.P.PeakPoint > 1 ) = false;
     
 else
     
