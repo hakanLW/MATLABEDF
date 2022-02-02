@@ -142,8 +142,11 @@ N=NormalMorph(ind);
 %     end
 % end
 NormalTemplate=ecgSignal((qrsComplexes.R(N)-40):(qrsComplexes.R(N)+90));
+% figure
+% plot(NormalTemplate);
 for i =1:length(qrsComplexes.R)
      TargetTemplate=ecgSignal((qrsComplexes.R(i)-40):(qrsComplexes.R(i)+90));
+%     plot(TargetTemplate)
      [R,P,RL,RU] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
      if R(1,2) <=0.90
          possibleVentricular(i)=true;   
