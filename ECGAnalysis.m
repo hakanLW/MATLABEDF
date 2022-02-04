@@ -558,7 +558,7 @@ if MatlabAPIConfigRequest.IsLogWriteToConsole
     tic
     disp('Morph and Template Based Premature Beat Detection ')
 end
-[QRSComplexes] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
+[QRSComplexes,similarity] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('# Completed...')
@@ -732,7 +732,7 @@ JsonResponsePackets.AsystoleResponse = ClassPackageOutput.AsystolePacket( ...
 JsonResponsePackets.AlarmButtonResponse = ClassPackageOutput.AlarmButtonPacket( AlarmButton, QRSComplexes, HolterRecordInfoRequest );
 
 % - Beat Details
-JsonResponsePackets.BeatDetailsResponse = ClassPackageOutput.BeatDetailsPacket( QRSComplexes, HolterRecordInfoRequest.RecordSamplingFrequency );
+JsonResponsePackets.BeatDetailsResponse = ClassPackageOutput.BeatDetailsPacket( QRSComplexes, HolterRecordInfoRequest.RecordSamplingFrequency,similarity);
 
 %-PaceMakerResponse
 JsonResponsePackets.PaceMakerResponse = ClassPackageOutput.PaceMakerPacket( Pace,SignalNoisePoints );

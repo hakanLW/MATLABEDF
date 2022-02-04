@@ -1746,10 +1746,10 @@ classdef ClassPackageOutput
         % <<< Function Outputs >>>
         %   struct beatDetailsPacket
         
-        function beatDetailsPacket = BeatDetailsPacket( qrsComplexes, samplingFreq )
+        function beatDetailsPacket = BeatDetailsPacket( qrsComplexes, samplingFreq,similarity )
             
             % Beat Details
-            beatDetailsPacket.BeatDetails = BeatClassification( qrsComplexes, samplingFreq );
+            beatDetailsPacket.BeatDetails = BeatClassification( qrsComplexes, samplingFreq,similarity );
             
             %  Beat Classification Details
             beatDetailsPacket.BeatForms = BeatForm( qrsComplexes );
@@ -2053,7 +2053,7 @@ end
 %   class list ClassList
 %
 
-function [ ClassList ] = BeatClassification(  qrsComplexes, samplingFreq )
+function [ ClassList ] = BeatClassification(  qrsComplexes, samplingFreq,similarity )
 
 % Get Data
 beatPoints = qrsComplexes.R;
@@ -2091,6 +2091,8 @@ if ~isempty( beatFormType )
     beatBPM = num2cell( beatBPM );
     %new beatbpm
      newbeatBPM = num2cell( newbeatBPM );
+     %similarity
+     similarity = num2cell( similarity );
     % MinimumHeartRateBeatIndex
 %     MinimumHeartRateBeatIndex=num2cell(MinimumHeartRateBeatIndex);
 %     %MaximumHeartRateBeatIndex
@@ -2136,6 +2138,11 @@ if ~isempty( beatFormType )
     %tEndPoint
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).TEndPoint ] = deal( tEndPoint{:} );
     [ Class.(Name)(numberOfBeats + 1).TEndPoint ] = deal( int32(0) );
+    
+    %Similarity
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).similarity ] = deal( similarity{:} );
+    [ Class.(Name)(numberOfBeats + 1).similarity ] = deal( int32(0) );
+    
 %     % MinimumHeartRateBeatIndex
 %     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).MinimumHeartRateBeatIndex ] = deal( MinimumHeartRateBeatIndex{:} );
 %     [ Class.(Name)(numberOfBeats + 1).MinimumHeartRateBeatIndex ] = deal( int32(0) );
