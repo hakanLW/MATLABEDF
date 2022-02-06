@@ -54,7 +54,7 @@ string JsonResponsePackets
     <param.net.tsa.namespace />
     <param.net.tsa.superclass>ClassMatlabAPI</param.net.tsa.superclass>
     <param.net.tsa.metadata />
-    <param.net.tsa.metadata.assembly>C:\GIT\matlabapideveloper</param.net.tsa.metadata.assembly>
+    <param.net.tsa.metadata.assembly>C:\Users\Lenovo\Documents\MATLAB</param.net.tsa.metadata.assembly>
     <param.net.saved.interface />
     <unset>
       <param.icon />

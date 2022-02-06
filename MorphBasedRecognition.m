@@ -1,4 +1,4 @@
-function [ qrsComplexes ] = MorphBasedRecognition( qrsComplexes,ecgSignal )
+function [ qrsComplexes,similarity ] = MorphBasedRecognition( qrsComplexes,ecgSignal)
 
 %% HEART RATE CHANGE %%
 heartRate=qrsComplexes.HeartRate;
@@ -99,7 +99,7 @@ for m =2:length(ectopics)-1
          ectopics(m+1)=false;
     end
     if ((ectopics(m-1)==false)|| (qrsComplexes.NoisyBeat(m-1)==false)) && (ectopics(m)==true) 
-        if (qrsComplexes.HeartRate(m) / qrsComplexes.HeartRate(m-1)) <1.15
+        if (qrsComplexes.HeartRate(m) / qrsComplexes.HeartRate(m-1)) <1.15 
              ectopics(m)=false;
         end
     end
@@ -122,6 +122,7 @@ end
 %% PREMATURE BEAT CLASSIFICATION
 possibleVentricular=zeros(length(qrsComplexes.R),1);
 
+
 NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 & qrsComplexes.P.EndPoint>1 & qrsComplexes.T.StartPoint>1 & qrsComplexes.T.EndPoint>1);
 
 L=length(NormalMorph);
@@ -143,13 +144,17 @@ N=NormalMorph(ind);
 %         possibleVentricular(i)=true;
 %     end
 % end
-NormalTemplate=ecgSignal((qrsComplexes.R(N)-40):(qrsComplexes.R(N)+90));
+similarity=zeros(length(qrsComplexes.R),1);
+% nDir=qrsComplexes.R(N)-qrsComplexes.P.StartPoint(N);
+% pDir=qrsComplexes.T.EndPoint(N)-qrsComplexes.R(N);
+NormalTemplate=ecgSignal((qrsComplexes.R(N)-42):(qrsComplexes.R(N)+92));
 % figure
 % plot(NormalTemplate);
 for i =1:length(qrsComplexes.R)
-     TargetTemplate=ecgSignal((qrsComplexes.R(i)-40):(qrsComplexes.R(i)+90));
+     TargetTemplate=ecgSignal((qrsComplexes.R(i)-42):(qrsComplexes.R(i)+92));
 %     plot(TargetTemplate)
      [R,~,~,~] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
+     similarity(i)=R(1,2) ;
      if R(1,2) <=0.90
          possibleVentricular(i)=true;   
      end
@@ -157,7 +162,16 @@ end
 
   disp('### REFERENCE BEAT ###')
   disp(N)
-  
+
+  possibleV=ones(length(qrsComplexes.R),1);
+  for t = 2:length(qrsComplexes.R)-1
+    if (possibleVentricular(t) ==true && possibleVentricular(t+1) == true) ||  (possibleVentricular(t-1) ==true && possibleVentricular(t) == true)
+         if (qrsComplexes.QRSInterval(t) / qrsComplexes.QRSInterval(N) ) < 1.5
+              possibleV(t)=0;   
+         end
+    end
+  end
+ possibleVentricular(possibleV==0)=false;
   
 % 
 %  [R,P,RL,RU] = corrcoef(TT,NormalTemplate,'Alpha',0.05);
