@@ -145,17 +145,18 @@ N=NormalMorph(ind);
 %     end
 % end
 similarity=zeros(length(qrsComplexes.R),1);
+QR=int64(qrsComplexes.R);
 % nDir=qrsComplexes.R(N)-qrsComplexes.P.StartPoint(N);
 % pDir=qrsComplexes.T.EndPoint(N)-qrsComplexes.R(N);
-NormalTemplate=ecgSignal((qrsComplexes.R(N)-42):(qrsComplexes.R(N)+92));
+NormalTemplate=ecgSignal((QR(N)-int64(42)):(QR(N)+int64(92)));
 % figure
 % plot(NormalTemplate);
 for i =1:length(qrsComplexes.R)
-     TargetTemplate=ecgSignal((qrsComplexes.R(i)-42):(qrsComplexes.R(i)+92));
+     TargetTemplate=ecgSignal((QR(i)-int64(42)):(QR(i)+int64(92)));
 %     plot(TargetTemplate)
      [R,~,~,~] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
      similarity(i)=R(1,2) ;
-     if R(1,2) <=0.90
+     if R(1,2) <=0.905
          possibleVentricular(i)=true;   
      end
 end
@@ -165,8 +166,8 @@ end
 
   possibleV=ones(length(qrsComplexes.R),1);
   for t = 2:length(qrsComplexes.R)-1
-    if (possibleVentricular(t) ==true && possibleVentricular(t+1) == true) ||  (possibleVentricular(t-1) ==true && possibleVentricular(t) == true)
-         if (qrsComplexes.QRSInterval(t) / qrsComplexes.QRSInterval(N) ) < 1.5
+    if ((possibleVentricular(t) ==true && possibleVentricular(t+1) == true) ||  (possibleVentricular(t-1) ==true && possibleVentricular(t) == true)) && ((ectopics(t) ==1 && ectopics(t+1) ==1) || (ectopics(t) ==1 && ectopics(t-1) ==1))
+         if (qrsComplexes.QRSInterval(t) / qrsComplexes.QRSInterval(N) ) < 1.18
               possibleV(t)=0;   
          end
     end
@@ -190,5 +191,7 @@ for j =2:length(qrsComplexes.R)-1
         qrsComplexes.AtrialBeats(j+1)=false;
     end
 end
+%  qrsComplexes.VentricularBeats(qrsComplexes.AtrialBeats(similarity<0))=true;
+%  qrsComplexes.AtrialBeats(similarity<0)=false;
 
 end
