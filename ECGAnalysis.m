@@ -31,7 +31,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 10 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 1);
+ResponseInfo.Version.Build = int32( 2);
 
 disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
 
@@ -756,7 +756,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION 6/02/2022 ***' ...
+disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION 09/02/2022 *** NORMAL BEAT SELECTION'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

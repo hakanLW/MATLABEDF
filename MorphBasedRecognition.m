@@ -81,7 +81,7 @@ for d =11:length(tL)
     if avg(d)>0
         hrChange(d)=single(hR(d)) /single(avg(d));
     else
-       for e=1:d
+       for e=1:(d-1)
            if avg(d-e)>0
          hrChange(d)=single(hR(d)) /single(avg(d-e));
          break
@@ -126,13 +126,28 @@ possibleVentricular=zeros(length(qrsComplexes.R),1);
 NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 ...
     & qrsComplexes.P.EndPoint>1 & qrsComplexes.HeartRate > 40 ...
     & qrsComplexes.HeartRate<100 );
+NormalCondition=NormalMorph;
+for n =2:length(NormalMorph)-1
+    if qrsComplexes.HeartRate(NormalCondition(n)-1) ~= qrsComplexes.HeartRate(NormalCondition(n)+1)
+        NormalCondition(n)=0;
+    end
+end
+%BAK BURAYA
+NormalCondition(NormalCondition==0)=[ ];
+hrEV=qrsComplexes.HeartRate(NormalCondition);
 
-L=length(NormalMorph);
-ind=round(L/2);
-if ind==0
-    ind=1;
+if ~isempty(NormalCondition)
+        [~,I]=min(hrEV);
+        ind=I;
+        disp('Nabza Dayali')
+else
+    L=length(NormalMorph);
+    ind=round(L/2);
+    disp('Normal Morfoloji')
 end
 
+disp("**** IND ****")
+%ind
 N=NormalMorph(ind);
 
 % NormalMorph(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 & qrsComplexes.P.EndPoint>1 & qrsComplexes.T.StartPoint>1 & qrsComplexes.T.EndPoint>1) = true;
@@ -185,7 +200,7 @@ for i =1:length(qrsComplexes.R)
 end
 
 for o =1:length(similarity)
-    if similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))) <0.3 && similarity(o) <0.95
+    if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <0.3 && similarity(o) <0.95
           possibleVentricular(o)=true;   
     end
 end
