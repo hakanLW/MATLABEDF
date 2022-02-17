@@ -1,7 +1,7 @@
 {
 	"HolterRecordInfoRequest": {
-		"RecordStartTime": "2021-07-05T13:25:04.000Z",
-		"RecordEndTime": "2021-07-06T13:22:45.000Z",
+		"RecordStartTime": "2021-12-16T10:54:00.000Z",
+		"RecordEndTime": "2021-12-17T09:24:37.000Z",
 		"RecordSamplingFrequency": 250,
 		"ChannelList": [
 			"V5",
@@ -10,7 +10,7 @@
 		],
 		"EcgElectrodeStateList": [
 			{
-				"MeasurementDateTime": "2020-07-10T19:46:31.000Z",
+				"MeasurementDateTime": "2021-12-16T10:54:00.000Z",
 				"CableSetType": 6,
 				"ProbeStatus": {
 					"V1": false,
@@ -69,7 +69,12 @@
 			"EndTime": 24
 		},
 		"ActivityPeriod": [],
-		"IntervalWithoutSignal": [],
+		"IntervalWithoutSignal": [
+			{
+				"StartTime": "2021-12-16T23:58:48.000Z",
+				"EndTime": "2021-12-17T00:00:00.000Z"
+			}
+		],
 		"Channel": "Lead2"
 	},
 	"MatlabAPIConfigRequest": {
@@ -78,7 +83,7 @@
 	"AlarmButtonRequest": null,
 	"EnvironmentConfig": {
 		"Environment": null,
-		"ChannelDataPath": "9581-20220201165918\"
+		"ChannelDataPath": "9581-20211221163013\"
 	},
 	"ReAnalysis": false,
 	"PaceMaker": false

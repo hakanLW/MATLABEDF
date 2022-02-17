@@ -1,4 +1,4 @@
-function [ qrsComplexes,similarity ] = MorphBasedRecognition( qrsComplexes,ecgSignal)
+function [ qrsComplexes,similarity ] = MorphBasedRecognition2( qrsComplexes,ecgSignal)
 
 %% HEART RATE CHANGE %%
 heartRate=qrsComplexes.HeartRate;
@@ -300,6 +300,8 @@ for j =2:length(qrsComplexes.R)-1
         qrsComplexes.AtrialBeats(j+1)=false;
     end
 end
+%% TACHYCARDIA 
+
 
 %  qrsComplexes.VentricularBeats(qrsComplexes.AtrialBeats(similarity<0))=true;
 %  qrsComplexes.AtrialBeats(similarity<0)=false;

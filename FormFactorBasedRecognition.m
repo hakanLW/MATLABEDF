@@ -1,4 +1,4 @@
-function [ qrsComplexes,similarity ] = MorphBasedRecognition( qrsComplexes,ecgSignal)
+function [ qrsComplexes,similarity ] = FormFactorBasedRecognition( qrsComplexes,ecgSignal)
 
 %% HEART RATE CHANGE %%
 heartRate=qrsComplexes.HeartRate;
@@ -189,21 +189,64 @@ positive=int64(92);
 NormalTemplate=ecgSignal((QR(N)-negative):(QR(N)+positive));
 % figure
 % plot(NormalTemplate);
+TargetTemplate=cell(length(qrsComplexes.R),1);
 for i =1:length(qrsComplexes.R)
-     TargetTemplate=ecgSignal((QR(i)-negative):(QR(i)+positive));
+     TargetTemplate{i}=ecgSignal((QR(i)-negative):(QR(i)+positive));
 %     plot(TargetTemplate)
-     [R,~,~,~] = corrcoef(TargetTemplate,NormalTemplate,'Alpha',0.05);
+     [R,~,~,~] = corrcoef(TargetTemplate{i},NormalTemplate,'Alpha',0.05);
      similarity(i)=R(1,2) ;
 %      if R(1,2) <=0.90
 %          possibleVentricular(i)=true;   
 %      end
 end
+varN=var(NormalTemplate);
+nDer=diff(NormalTemplate);
+varN1=var(nDer);
+
+mobilityN1=sqrt(varN1/varN);
+
+nDer2=diff(nDer);
+varN2=var(nDer2);
+
+mobilityN2=sqrt(varN2/varN1);
+
+formFactorN=mobilityN2/mobilityN1;
+formFactorT=zeros(length(qrsComplexes.R),1);
+for v =1:length(qrsComplexes.R)
+    varT=var(TargetTemplate{v});
+    tDer=diff(TargetTemplate{v});
+    varT1=var(tDer);
+    mobilityT1=sqrt(varT1/varT);
+    
+    tDer2=diff(tDer);
+    varT2=var(tDer2);
+
+    mobilityT2=sqrt(varT2/varT1);
+    
+    formFactorT(v)=mobilityT2/mobilityT1;
+        
+end
 
 for o =1:length(similarity)
-    if similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))) <0.3 && similarity(o) <0.95
+    if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <0.3 && similarity(o) <0.95
           possibleVentricular(o)=true;   
     end
 end
+
+% %% P WAVE SIMILARITY %% 
+% dirN= int64(qrsComplexes.Q(N))-int64(qrsComplexes.P.StartPoint(N));
+% 
+% NormalP=ecgSignal(int64(qrsComplexes.Q(N)):-1:(int64(qrsComplexes.Q(N))-dirN));
+% pWaveSimilarity=zeros(length(qrsComplexes.R),1);
+% for p =1:length(qrsComplexes.R)
+%      TargetlP=ecgSignal(int64(qrsComplexes.Q(p)):-1:((int64(qrsComplexes.Q(p))-dirN)));
+% %     plot(TargetTemplate)
+%      [Rp,~,~,~] = corrcoef(TargetlP,NormalP,'Alpha',0.05);
+%      pWaveSimilarity(p)=Rp(1,2) ;
+% %      if R(1,2) <=0.90
+% %          possibleVentricular(i)=true;   
+% %      end
+% end
 
   disp('### REFERENCE BEAT ###')
   disp(N)
@@ -241,6 +284,7 @@ for j =2:length(qrsComplexes.R)-1
         qrsComplexes.AtrialBeats(j+1)=false;
     end
 end
+
 %  qrsComplexes.VentricularBeats(qrsComplexes.AtrialBeats(similarity<0))=true;
 %  qrsComplexes.AtrialBeats(similarity<0)=false;
 
