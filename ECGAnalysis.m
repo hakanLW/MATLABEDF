@@ -565,6 +565,8 @@ end
 % [QRSComplexes,similarity] =FormFactorBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 [ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 %[ QRSComplexes,similarity ] = IntMorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+%[ QRSComplexes,similarity ] = MorphBasedRecognition3( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('# Completed...')
@@ -764,7 +766,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION 09/02/2022 *** NORMAL BEAT SELECTION'  ...
+disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION 21/02/2022 *** NORMAL BEAT SELECTION'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )
