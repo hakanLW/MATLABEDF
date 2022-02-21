@@ -29,9 +29,9 @@ JsonResponsePackets = [ ];
 format longG
 
 % Versions
-ResponseInfo.Version.Major = int32( 10 );
+ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 2);
+ResponseInfo.Version.Build = int32( 0);
 
 disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
 
@@ -563,7 +563,7 @@ end
 %[QRSComplexes,similarity] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 %[QRSComplexes,similarity ] = ( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 % [QRSComplexes,similarity] =FormFactorBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
-[ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+[ QRSComplexes,similarity, NormalSample ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 %[ QRSComplexes,similarity ] = IntMorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 %[ QRSComplexes,similarity ] = MorphBasedRecognition3( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 
@@ -628,8 +628,9 @@ JsonResponsePackets.AnalysisSummaryResponse = ClassPackageOutput.AnalysisSummary
     MatlabAPIConfigRequest.AnalysisChannel, ... % Main analysis channel
     HolterRecordInfoRequest, ... % Holter Record Info
     length( ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ) ), ... % Signal Duration
-    QRSComplexes, .... % Total Beats
-    NoiseRuns ... % Noise Runs
+    QRSComplexes, ...  % Total Beats
+    NoiseRuns, ... % Noise Runs
+    NormalSample ...
     );
 
 % - Heart Rate Summary

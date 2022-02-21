@@ -207,9 +207,9 @@ NRR=qrsComplexes.RRInterval(N);
 
 for e=2:length(qrsComplexes.RRInterval)-1
     if ectopics(e-1)==false && ectopics(e+1)==false && qrsComplexes.AtrialBeats(e)==true && similarity(e) <0.95
-        if NRR > 1.95* qrsComplexes.RRInterval(e)
-            qrsComplexes.AtrialBeats=false;
-            qrsComplexes.VentricularBeats=true;
+        if   qrsComplexes.RRInterval(e) +qrsComplexes.RRInterval(e+1) >1.896*NRR 
+            qrsComplexes.AtrialBeats(e)=false;
+            qrsComplexes.VentricularBeats(e)=true;
         end
     end
 end

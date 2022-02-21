@@ -1,4 +1,4 @@
-function [ qrsComplexes,similarity ] = MorphBasedRecognition2( qrsComplexes,ecgSignal)
+function [ qrsComplexes,similarity, NormalSample] = MorphBasedRecognition2( qrsComplexes,ecgSignal)
 
 %% HEART RATE CHANGE 
 
@@ -142,6 +142,7 @@ end
 disp(" REFERENCE BEAT ###")
 disp(N)
 
+NormalSample=int64(qrsComplexes.R(N));
 
 %% SIMILARITY CHECK
 similarity=zeros(length(qrsComplexes.R),1);
@@ -180,7 +181,7 @@ end
 
 
 for o =1:length(similarity)
-    if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <= 0.29 && similarity(o) <0.90
+    if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <= 0.30 && similarity(o) <0.95
           possibleVentricular(o)=true;   
     end
 end

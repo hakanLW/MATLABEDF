@@ -101,7 +101,7 @@ classdef ClassPackageOutput
         
         %% Analysis Summary Packet
         
-        function analysisSummaryPacket = AnalysisSummaryPacket( analysisChannel, recordInfo, signalSampleDuration, qrsComplexes, noiseRun )
+        function analysisSummaryPacket = AnalysisSummaryPacket( analysisChannel, recordInfo, signalSampleDuration, qrsComplexes, noiseRun, normalSample )
             % Analysis Summary Packet
             %
             % analysisSummaryPacket = AnalysisSummaryPacket( analysisDuration, totalBeats )
@@ -144,6 +144,8 @@ classdef ClassPackageOutput
             % -
             analysisSummaryPacket.Summary.AnalysisChannel = analysisChannel;
             % - 
+            
+             analysisSummaryPacket.Summary.NormalSample = normalSample;
             if numel( recordInfo.ChannelList ) >= numel( recordInfo.ActiveSignals )
                 analysisSummaryPacket.Summary.ActiveSignals = recordInfo.ActiveSignals;
             else
@@ -2108,11 +2110,14 @@ if ~isempty( beatFormType )
     
     %P Start Point
     pStartPoint = num2cell(qrsComplexes.P.StartPoint);
-    %Q
-    Q = num2cell(qrsComplexes.Q);
     
-    %S
-    S = num2cell(qrsComplexes.S);
+    %T End Point
+    tEndPoint = num2cell(qrsComplexes.T.EndPoint);
+%     %Q
+%     Q = num2cell(qrsComplexes.Q);
+%     
+%     %S
+%     S = num2cell(qrsComplexes.S);
     % ListName
     Name = 'BeatDetails';
     
@@ -2136,15 +2141,12 @@ if ~isempty( beatFormType )
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).AverageHeartRate ] = deal( newbeatBPM{:} );
     [ Class.(Name)(numberOfBeats + 1).AverageHeartRate ] = deal( int32(0) );
     %pStartPoint
-    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).PStartPoint ] = deal( pStartPoint{:} );
-    [ Class.(Name)(numberOfBeats + 1).PStartPoint ] = deal( int32(0) );
-    %Q
-    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).Q ] = deal( Q{:} );
-    [ Class.(Name)(numberOfBeats + 1).Q ] = deal( int32(0) );
-     %S
-    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).S ] = deal( S{:} );
-    [ Class.(Name)(numberOfBeats + 1).S ] = deal( int32(0) );
-    
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).pStartPoint ] = deal( pStartPoint{:} );
+    [ Class.(Name)(numberOfBeats + 1).pStartPoint ] = deal( int32(0) );
+    %tEndPoint
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).tEndPoint ] = deal( tEndPoint{:} );
+    [ Class.(Name)(numberOfBeats + 1).tEndPoint ] = deal( int32(0) );
+   %
     %Similarity
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).similarity ] = deal( similarity{:} );
     [ Class.(Name)(numberOfBeats + 1).similarity ] = deal( int32(0) );
