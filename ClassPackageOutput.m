@@ -2108,8 +2108,11 @@ if ~isempty( beatFormType )
     
     %P Start Point
     pStartPoint = num2cell(qrsComplexes.P.StartPoint);
-    %T End Pint
-    tEndPoint = num2cell(qrsComplexes.T.EndPoint);
+    %Q
+    Q = num2cell(qrsComplexes.Q);
+    
+    %S
+    S = num2cell(qrsComplexes.S);
     % ListName
     Name = 'BeatDetails';
     
@@ -2135,9 +2138,12 @@ if ~isempty( beatFormType )
     %pStartPoint
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).PStartPoint ] = deal( pStartPoint{:} );
     [ Class.(Name)(numberOfBeats + 1).PStartPoint ] = deal( int32(0) );
-    %tEndPoint
-    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).TEndPoint ] = deal( tEndPoint{:} );
-    [ Class.(Name)(numberOfBeats + 1).TEndPoint ] = deal( int32(0) );
+    %Q
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).Q ] = deal( Q{:} );
+    [ Class.(Name)(numberOfBeats + 1).Q ] = deal( int32(0) );
+     %S
+    [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).S ] = deal( S{:} );
+    [ Class.(Name)(numberOfBeats + 1).S ] = deal( int32(0) );
     
     %Similarity
     [ Class.(Name)( double( 1 ) : double( numberOfBeats) ).similarity ] = deal( similarity{:} );

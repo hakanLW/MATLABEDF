@@ -139,7 +139,7 @@ string JsonResponsePackets
       <file>C:\GIT\matlabapideveloper\ECGFilterSignal.m</file>
       <file>C:\GIT\matlabapideveloper\ECGIntervalSegmentCalculation.m</file>
       <file>C:\GIT\matlabapideveloper\HRVAnalysis.m</file>
-      <file>C:\GIT\matlabapideveloper\MorphBasedRecognition.m</file>
+      <file>C:\GIT\matlabapideveloper\IntMorphBasedRecognition2.m</file>
       <file>C:\GIT\matlabapideveloper\NoiseBeatClassification.m</file>
       <file>C:\GIT\matlabapideveloper\PaceDetector.m</file>
       <file>C:\GIT\matlabapideveloper\ReSampleECG.m</file>

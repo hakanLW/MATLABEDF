@@ -554,14 +554,18 @@ end
 %     toc
 %     disp(' ')
 % end
+
+
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     tic
     disp('Morph and Template Based Premature Beat Detection ')
 end
 %[QRSComplexes,similarity] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
-%[QRSComplexes,similarity ] = MorphandHRBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
+%[QRSComplexes,similarity ] = ( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 % [QRSComplexes,similarity] =FormFactorBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
-[ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+%[ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+[ QRSComplexes,similarity ] = IntMorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('# Completed...')
     toc
