@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1292491373" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="3422733658" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI_1_0_0</param.appname>
     <param.icon />
     <param.icons />
@@ -139,7 +139,7 @@ string JsonResponsePackets
       <file>C:\GIT\matlabapideveloper\ECGFilterSignal.m</file>
       <file>C:\GIT\matlabapideveloper\ECGIntervalSegmentCalculation.m</file>
       <file>C:\GIT\matlabapideveloper\HRVAnalysis.m</file>
-      <file>C:\GIT\matlabapideveloper\IntMorphBasedRecognition2.m</file>
+      <file>C:\GIT\matlabapideveloper\MorphBasedRecognition2.m</file>
       <file>C:\GIT\matlabapideveloper\NoiseBeatClassification.m</file>
       <file>C:\GIT\matlabapideveloper\PaceDetector.m</file>
       <file>C:\GIT\matlabapideveloper\ReSampleECG.m</file>

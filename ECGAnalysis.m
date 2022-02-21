@@ -563,8 +563,8 @@ end
 %[QRSComplexes,similarity] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 %[QRSComplexes,similarity ] = ( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
 % [QRSComplexes,similarity] =FormFactorBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ));
-%[ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
-[ QRSComplexes,similarity ] = IntMorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+[ QRSComplexes,similarity ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+%[ QRSComplexes,similarity ] = IntMorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('# Completed...')
