@@ -86,7 +86,7 @@ classdef ClassPackageOutput
             % Conversion
             filteredSignal = transpose( cell2mat( transpose( struct2cell( filteredSignal ) ) ) );
             % File Adress
-            fileAdress = strrep( matlabConfig.FileAdress, '_RawSignal.bin' , '_FilteredSignal.bin' );
+            fileAdress =  matlabConfig.FileAdress;
             % open file
             file2Write = fopen( fileAdress, 'W');
             % write

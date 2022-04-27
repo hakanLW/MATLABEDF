@@ -66,7 +66,7 @@ isFileExist = false;
 % - check the length of the adress
 if ( length( FileAdress ) > 15 )
     % - check the adress format
-    if FileAdress( ( end - 13 ):end ) == '_RawSignal.bin'
+    if FileAdress( ( end - 18 ):end ) == '_FilteredSignal.bin'
         % - check if file exist
         if exist( FileAdress, 'file' )
             % - rise flag
