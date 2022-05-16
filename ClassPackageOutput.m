@@ -1814,7 +1814,7 @@ classdef ClassPackageOutput
             jsonPacket = string( jsonPacket );
             jsonPacket = strcat(jsonPacket, '  ');
             % write to text file
-            fileAdress = strrep(fileAdress, '_RawSignal.bin' , '_MatlabAPIReport.json' );
+            fileAdress = strrep(fileAdress, '_FilteredSignal.bin' , '_MatlabAPIReport.json' );
             % open file
             reportFile = fopen(fileAdress, 'w');
             % write json to file

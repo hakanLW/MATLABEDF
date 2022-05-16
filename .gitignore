@@ -49,3 +49,11 @@ Thumbs.db
 *.mov
 *.wmv
 
+MatlabAPI_dll/MatlabAPI/for_redistribution_files_only/MatlabAPI.dll
+MatlabAPI_dll/MatlabAPI/for_redistribution_files_only/MatlabAPI_overview.html
+MatlabAPI_dll/MatlabAPI/for_redistribution_files_only/MatlabAPINative.dll
+MatlabAPI_dll/MatlabAPI/for_testing/MatlabAPI.dll
+MatlabAPI_dll/MatlabAPI/for_testing/MatlabAPI.xml
+MatlabAPI_dll/MatlabAPI/for_testing/MatlabAPI_overview.html
+MatlabAPI_dll/MatlabAPI/for_testing/MatlabAPINative.dll
+MatlabAPI_dll/MatlabAPI/for_testing/MatlabAPINative.xml
