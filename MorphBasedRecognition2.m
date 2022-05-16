@@ -1,5 +1,5 @@
 function [ qrsComplexes,similarity, NormalSample] = MorphBasedRecognition2( qrsComplexes,ecgSignal)
-if ~isempty(qrsComplexes.HeartRate)
+if length(qrsComplexes.HeartRate)>15
     %% HEART RATE CHANGE 
 
     %First 10 Beat selection

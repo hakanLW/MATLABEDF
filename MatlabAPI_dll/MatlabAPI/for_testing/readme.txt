@@ -30,9 +30,9 @@ NOTE: You will need administrator rights to run MCRInstaller.
 
 2. Files to Deploy and Package
 
--MatlabAPI_1_0_0.dll
+-MatlabAPI.dll
    -contains the generated component using MWArray API. 
--MatlabAPI_1_0_0Native.dll
+-MatlabAPINative.dll
    -contains the generated component using native API.
 -This readme file
 
@@ -49,16 +49,14 @@ MWArray.xml - This file contains the code comments for the MWArray data conversi
               distrib directory or in
               <mcr_root>*\toolbox\dotnetbuilder\bin\win64\v2.0
 
-MatlabAPI_1_0_0_overview.html - HTML overview documentation file for the generated 
-                                component. It contains the requirements for accessing the 
-                                component and for generating arguments using the MWArray 
-                                class hierarchy.
+MatlabAPI_overview.html - HTML overview documentation file for the generated component. 
+                          It contains the requirements for accessing the component and 
+                          for generating arguments using the MWArray class hierarchy.
 
-MatlabAPI_1_0_0.xml - This file contains the code comments for the MatlabAPI_1_0_0 
-                                component classes and methods. Using a third party 
-                                documentation tool, this file can be combined with either 
-                                or both of the previous files to generate online 
-                                documentation for the MatlabAPI_1_0_0 component.
+MatlabAPI.xml - This file contains the code comments for the MatlabAPI component classes 
+                          and methods. Using a third party documentation tool, this file 
+                          can be combined with either or both of the previous files to 
+                          generate online documentation for the MatlabAPI component.
 
                  
 

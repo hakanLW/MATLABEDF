@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
   <configuration build-checksum="3422733658" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
-    <param.appname>MatlabAPI_1_0_0</param.appname>
+    <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.00</param.version>
+    <param.version>1.02</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
@@ -20,7 +20,7 @@ string JsonResponsePackets
 - file: _MatlabAPIReport.txt</param.description>
     <param.screenshot />
     <param.guid />
-    <param.installpath.string>\MatlabAPI_1_0_0\</param.installpath.string>
+    <param.installpath.string>\MatlabAPI\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
     <param.logo />
     <param.install.notes />
@@ -146,9 +146,9 @@ string JsonResponsePackets
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0_overview.html" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0_overview.html</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0.dll</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_1_0_0Native.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_1_0_0Native.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPINative.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPINative.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_overview.html" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_overview.html</file>
       <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="readme.txt" optional="true">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />

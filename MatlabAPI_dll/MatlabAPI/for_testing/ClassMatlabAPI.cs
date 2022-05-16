@@ -1,10 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Mon Feb 21 23:00:29 2022
+* Date: Tue May 17 00:17:36 2022
 * Arguments:
-* "-B""macro_default""-W""dotnet:MatlabAPI_1_0_0,ClassMatlabAPI,4.0,private""-T""link:lib"
-* "-d""C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing""-v""class{ClassMatla
-* bAPI:C:\GIT\matlabapideveloper\ECGAnalysis.m}"
+* "-B""macro_default""-W""dotnet:MatlabAPI,ClassMatlabAPI,4.0,private""-T""link:lib""-d""C
+* :\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing""-v""class{ClassMatlabAPI:C
+* :\GIT\matlabapideveloper\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
@@ -16,7 +16,7 @@ using MathWorks.MATLAB.NET.Utility;
 [assembly: System.Reflection.AssemblyKeyFile(@"")]
 #endif
 
-namespace MatlabAPI_1_0_0
+namespace MatlabAPI
 {
 
   /// <summary>
@@ -49,7 +49,7 @@ namespace MatlabAPI_1_0_0
 
           ctfFilePath= ctfFilePath.Remove(lastDelimiter, (ctfFilePath.Length - lastDelimiter));
 
-          string ctfFileName = "MatlabAPI_1_0_0.ctf";
+          string ctfFileName = "MatlabAPI.ctf";
 
           Stream embeddedCtfStream = null;
 

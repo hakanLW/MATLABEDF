@@ -12,7 +12,6 @@
 %   file _FilteredSignal.bin
 %   file _MatlabAPIReport.json
 
-
 function [JsonResponsePackets] = ECGAnalysis ( FileAdress, JsonRequestPackets)
 
 
@@ -31,7 +30,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 1);
+ResponseInfo.Version.Build = int32( 2);
 
 disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
 
