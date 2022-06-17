@@ -3,11 +3,11 @@
     <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.02</param.version>
+    <param.version>1.03</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
-    <param.summary>ECG Analysis Algorithm v1.0.0</param.summary>
+    <param.summary>ECG Analysis Algorithm v1.0.3</param.summary>
     <param.description>[ JsonResponsePackets ] = ECGAnalysis ( JsonRequestPackets)
 
 &lt;&lt;&lt; Function Inputs &gt;&gt;&gt;

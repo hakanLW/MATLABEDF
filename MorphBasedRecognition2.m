@@ -114,20 +114,38 @@ if length(qrsComplexes.HeartRate)>15
     NormalCondition=zeros(length(NormalMorph),1);
 
     for n =2:length(NormalMorph)-1
-        if qrsComplexes.HeartRate(NormalMorph(n)-1) ~= qrsComplexes.HeartRate(NormalMorph(n)+1)
+        if (double(qrsComplexes.HeartRate(NormalMorph(n)-1)) ~= double(qrsComplexes.HeartRate(NormalMorph(n)+1)))
             NormalCondition(n)=0;
         else
              NormalCondition(n)=NormalMorph(n);
         end
     end
-    NormalCondition(NormalCondition==0)=[ ];
+   NormalCondition(NormalCondition==0)=[ ];
 
     hrEV=zeros(length(qrsComplexes.HeartRate),1);
     hrEV(NormalCondition)=qrsComplexes.HeartRate(NormalCondition);
 
-    hrEV(hrEV==0 & hrEV<45)=500;
-
-    if ~isempty(NormalCondition)
+    %hrEV(hrEV==0 & hrEV<25)=500;
+    hrEVCond2=hrEV;
+    for h=2:length(hrEV)-1
+        if (( double(qrsComplexes.HeartRate(h-1))) >75 && double((qrsComplexes.HeartRate(h+1) >75)))
+            hrEVCond2(h)=500;
+        end
+    end
+    
+    hrEV(hrEV==0 & hrEV<25)=500; 
+    hrEVCond2(hrEVCond2==0 & hrEVCond2<25)=500;
+    
+    condition=hrEVCond2;
+    
+    condition(hrEVCond2==500)=[ ];
+   
+    if ~isempty(condition)
+            [~,I]=min(hrEVCond2);
+            ind=I;
+            disp('Nabza Dayali Önce ve Sonrasý Atimlar Esit ve 75ten kucuk')
+            N=ind;
+    elseif  ~isempty(NormalCondition)
             [~,I]=min(hrEV);
             ind=I;
             disp('Nabza Dayali')
@@ -213,9 +231,9 @@ if length(qrsComplexes.HeartRate)>15
 
     %% TACHYCARDIA 
 
-
     %  qrsComplexes.VentricularBeats(qrsComplexes.AtrialBeats(similarity<0))=true;
     %  qrsComplexes.AtrialBeats(similarity<0)=false;
+    
 else
      qrsComplexes.AtrialBeats=[ ];
      qrsComplexes.VentricularBeats=[ ];

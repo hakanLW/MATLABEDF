@@ -30,7 +30,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 2);
+ResponseInfo.Version.Build = int32( 3);
 
 disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
 
