@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3422733658" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="1039464222" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.03</param.version>
+    <param.version>1.04</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
@@ -30,7 +30,7 @@ string JsonResponsePackets
     <param.output>${PROJECT_ROOT}\MatlabAPI\for_redistribution</param.output>
     <param.logdir>${PROJECT_ROOT}\MatlabAPI</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
-    <param.user.defined.mcr.options />
+    <param.user.defined.mcr.options>C:\GIT\matlabapideveloper\AssemblyInfo.cs</param.user.defined.mcr.options>
     <param.target.type>subtarget.net.component</param.target.type>
     <param.support.packages />
     <param.namespace />
@@ -73,7 +73,6 @@ string JsonResponsePackets
       <param.output />
       <param.logdir />
       <param.enable.clean.build />
-      <param.user.defined.mcr.options />
       <param.support.packages />
       <param.namespace />
       <param.classorg />

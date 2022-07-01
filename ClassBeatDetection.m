@@ -51,7 +51,7 @@ classdef ClassBeatDetection
             noiseFlag = zeros( length( signal ), 1, 'logical' );
             
             % BASELINE FILTER
-            MoveAveragedSignal = abs( movmean( signal, 2 * recordInfo.RecordSamplingFrequency ) );
+            MoveAveragedSignal = abs( movmean( signal, 1.2 * recordInfo.RecordSamplingFrequency ) );
             %             MoveAveragedSignal( 120 * recordInfo.RecordSamplingFrequency : end ) = 0;
             
             % SIGNAL THRESHOLD

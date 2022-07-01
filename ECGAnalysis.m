@@ -30,9 +30,9 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 3);
+ResponseInfo.Version.Build = int32( 4);
 
-disp('MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION ')
+disp('GURULTULU ALAN DUZENLEMESI ')
 
 
 % Analysis Info
@@ -151,12 +151,13 @@ end
         HolterRecordInfoRequest, ...
         AnalysisParametersRequest, ...
         MatlabAPIConfigRequest );
+    QRSComplexes.NoisyBeat=zeros(length(QRSComplexes.R),1);
     if MatlabAPIConfigRequest.IsLogWriteToConsole
         disp('# Completed...')
         toc
         disp( ' ' )
     end
-    
+  
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%

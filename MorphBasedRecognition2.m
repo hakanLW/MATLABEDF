@@ -202,6 +202,9 @@ if length(qrsComplexes.HeartRate)>15
         if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <= 0.30 && similarity(o) <0.95
               possibleVentricular(o)=true;   
         end
+        if similarity(o) > 0.80
+            qrsComplexes.NoisyBeat(o)=false;
+        end
     end
 
     %% CREATE PAC AND PVC LISTS

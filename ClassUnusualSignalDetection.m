@@ -274,52 +274,56 @@ classdef ClassUnusualSignalDetection
         %% SubFunction : Clear QRS Complexes
         
         function QRSComplexes = ClearQRS( QRSComplexes, beat2Clear )
-            
-            % check left number of qrs
-            leftQRSNumber = length( QRSComplexes.R ) - length( beat2Clear );
-            if leftQRSNumber < 5
-                beat2Clear = transpose( 1:length( QRSComplexes.R ) );
+           
+            if ~isempty(beat2Clear)
+                QRSComplexes.NoisyBeat(beat2Clear)=true;
             end
             
-            % add next beat
-            beat2Clear = [ ( min(beat2Clear) - 1 ); beat2Clear ];
-            beat2Clear( beat2Clear < 1 ) = [ ];
-            beat2Clear = [ beat2Clear; ( max(beat2Clear) + 1 ) ];
-            beat2Clear( beat2Clear > length( QRSComplexes.R ) ) = [ ];
-            
-            % clear qrs
-            % - qrs fields
-            qrsFieldNames = fieldnames( QRSComplexes );
-            % - t wave fields
-            if any( strcmp( qrsFieldNames, 'T' ) )
-                % get fields related to T
-                tFieldNames = fieldnames( QRSComplexes.T );
-                % clear
-                for fieldIndex = 1 : length( tFieldNames )
-                    QRSComplexes.T.( tFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
-                end
-                % clear field
-                qrsFieldNames( strcmp( qrsFieldNames, 'T' ) ) = [  ];
-            end
-            % - p wave fields
-            if any( strcmp( qrsFieldNames, 'P' ) )
-                % get fields related to P
-                pFieldNames = fieldnames( QRSComplexes.P );
-                % clear
-                for fieldIndex = 1 : length( pFieldNames )
-                    QRSComplexes.P.( pFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
-                end
-                % clear field
-                qrsFieldNames( strcmp( qrsFieldNames, 'P' ) ) = [  ];
-            end
-            
-          
-            % qrs fields
-            for fieldIndex = 1 : length( qrsFieldNames )
-                
-                QRSComplexes.( qrsFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
-                
-            end
+%             % check left number of qrs
+%             leftQRSNumber = length( QRSComplexes.R ) - length( beat2Clear );
+%             if leftQRSNumber < 5
+%                 beat2Clear = transpose( 1:length( QRSComplexes.R ) );
+%             end
+%             
+%             % add next beat
+%             beat2Clear = [ ( min(beat2Clear) - 1 ); beat2Clear ];
+%             beat2Clear( beat2Clear < 1 ) = [ ];
+%             beat2Clear = [ beat2Clear; ( max(beat2Clear) + 1 ) ];
+%             beat2Clear( beat2Clear > length( QRSComplexes.R ) ) = [ ];
+%             
+%             % clear qrs
+%             % - qrs fields
+%             qrsFieldNames = fieldnames( QRSComplexes );
+%             % - t wave fields
+%             if any( strcmp( qrsFieldNames, 'T' ) )
+%                 % get fields related to T
+%                 tFieldNames = fieldnames( QRSComplexes.T );
+%                 % clear
+%                 for fieldIndex = 1 : length( tFieldNames )
+%                     QRSComplexes.T.( tFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
+%                 end
+%                 % clear field
+%                 qrsFieldNames( strcmp( qrsFieldNames, 'T' ) ) = [  ];
+%             end
+%             % - p wave fields
+%             if any( strcmp( qrsFieldNames, 'P' ) )
+%                 % get fields related to P
+%                 pFieldNames = fieldnames( QRSComplexes.P );
+%                 % clear
+%                 for fieldIndex = 1 : length( pFieldNames )
+%                     QRSComplexes.P.( pFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
+%                 end
+%                 % clear field
+%                 qrsFieldNames( strcmp( qrsFieldNames, 'P' ) ) = [  ];
+%             end
+%             
+%           
+%             % qrs fields
+%             for fieldIndex = 1 : length( qrsFieldNames )
+%                 
+%                 QRSComplexes.( qrsFieldNames{ fieldIndex } )( beat2Clear ) = [ ];
+%                 
+%             end
             
             
         end
@@ -488,6 +492,8 @@ classdef ClassUnusualSignalDetection
                 
             end
             
+            %%% Noise Runlar içindeki atýmlar daha sonra X olarak deðerlendireleceði için  tamamen silinir
+            noiseRuns=[ ];
             % New Heart Rate
             qrsComplexes.HeartRate = [ 0; ClassRhythmAnalysis.CalculateHeartRate( qrsComplexes.R, recordInfo.RecordSamplingFrequency ) ];
             % Premature beat assesment based on new heart rate
