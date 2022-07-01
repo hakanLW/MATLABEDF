@@ -111,6 +111,15 @@ if length(qrsComplexes.HeartRate)>15
     NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 ...
         & qrsComplexes.P.EndPoint>1 & qrsComplexes.HeartRate > 40 ...
         & qrsComplexes.HeartRate<100 );
+    if isempty(NormalMorph)
+        NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 ...
+        & qrsComplexes.P.EndPoint>1 & qrsComplexes.HeartRate > 40);
+    end
+    
+    if isempty(NormalMorph)
+        NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0);
+    end
+   
     NormalCondition=zeros(length(NormalMorph),1);
 
     for n =2:length(NormalMorph)-1
