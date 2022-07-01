@@ -1,10 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Fri Jul 01 10:43:12 2022
+* Date: Fri Jul 01 10:58:26 2022
 * Arguments:
-* "-B""macro_default""-W""dotnet:MatlabAPI,ClassMatlabAPI,4.0,private""-T""link:lib""-d""C
-* :\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing""-v""class{ClassMatlabAPI:C
-* :\GIT\matlabapideveloper\ECGAnalysis.m}"
+* "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI,Clas
+* sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\matlabapideveloper\MatlabAPI_dll\Matlab
+* API\for_testing""-v""class{ClassMatlabAPI:C:\GIT\matlabapideveloper\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
