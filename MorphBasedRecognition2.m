@@ -247,5 +247,5 @@ else
      qrsComplexes.AtrialBeats=[ ];
      qrsComplexes.VentricularBeats=[ ];
      similarity=[ ];
-     NormalSample='NaN';
+     NormalSample=0;
 end
