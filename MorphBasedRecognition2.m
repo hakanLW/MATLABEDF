@@ -174,8 +174,11 @@ if length(qrsComplexes.HeartRate)>15
     %% SIMILARITY CHECK
     similarity=zeros(length(qrsComplexes.R),1);
     QR=int64(qrsComplexes.R);
-
+    if  (qrsComplexes.P.StartPoint(N)>1) ~= 0
     negative=QR(N)-int64(qrsComplexes.P.StartPoint(N));
+    else
+    negative=int64(40);
+    end
     positive=int64(92);
 
     NormalTemplate=ecgSignal((QR(N)-negative):(QR(N)+positive));
