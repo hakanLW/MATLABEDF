@@ -30,9 +30,9 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 4);
+ResponseInfo.Version.Build = int32( 5);
 
-disp('GURULTULU ALAN DUZENLEMESI ')
+disp('VERSION 1.0.4')
 
 
 % Analysis Info
@@ -374,39 +374,7 @@ end
         disp(' ')
     end
 
-%  clear BeatNoisePoints SignalNoisePoints MissingIntervals
 
-
-% %% RE-ANALYSIS 
-% %   Write and Read Initial Matlab API Report
-% 
-% 
-% if ~MatlabAPIConfigRequest.ReAnalysis
-%     if MatlabAPIConfigRequest.IsLogWriteToConsole
-%         disp( 'Creating Initial Matlab API Report :' )
-%         tic
-%     end
-%     WriteInitialReport;
-%     if MatlabAPIConfigRequest.IsLogWriteToConsole
-%         disp('# Completed...')
-%         toc
-%         disp( ' ' )
-%     end
-%     
-% else
-%     
-%     if MatlabAPIConfigRequest.IsLogWriteToConsole
-%         disp( 'Reading  Initial Matlab API Report:' )
-%         tic
-%     end
-%     ReadInitialReport;
-%     if MatlabAPIConfigRequest.IsLogWriteToConsole
-%         disp('# Completed...')
-%         toc
-%         disp( ' ' )
-%     end
-%     
-% end
 
 
 %% Remove Unneeded Channels
@@ -431,137 +399,15 @@ if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp( ' ' )
 end
 
-% 
-% %% Rhythm Analysis
-% 
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('Rhythm Analysis:')
-%     tic
-% end
-% [BradycardiaRuns, TachycardiaRuns, ActivityBasedTachycardiaRuns] = RhythmAnalysis( ...
-%     QRSComplexes, ...
-%     HolterRecordInfoRequest, ...
-%     AnalysisParametersRequest, ...
-%     MatlabAPIConfigRequest );
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('- General rhythm analysis is completed.')
-% end
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('# Completed...')
-%     toc
-%     disp(' ')
-% end
 
-
-% %% Tachycardia Type Detection
-% 
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('Tachycardia Type Detection Analysis:')
-%     tic
-% end
-% 
-% [ SinusTachyRuns, SupraventricularTachyRuns, VentricularTachyRuns, VentricularFlutterRuns ] = TachycardiaTypeSegmentation( ...
-%     QRSComplexes, ...
-%     TachycardiaRuns, ...
-%     HolterRecordInfoRequest, ...
-%     AnalysisParametersRequest ...
-%     );
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('# Completed...')
-%     toc
-%     disp(' ')
-% end
-
-
-% %% Bradycardia Type Detection
-% 
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('Bradycardia Type Detection Analysis:')
-%     tic
-% end
-% 
-% [ BradycardiaRuns, AVBlockDegree1, AVBlockDegree2_Type1, AVBlockDegree2_Type2, AVBlockDegree3 ] = BradycardiaTypeSegmentation( ...
-%     QRSComplexes, ...
-%     BradycardiaRuns, ....
-%     HolterRecordInfoRequest, ...
-%     AnalysisParametersRequest ...
-%     );
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('# Completed...')
-%     toc
-%     disp(' ')
-% end
-
-
-% %% Irregular Rhythm Analysis
-% 
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('Atrial Fibrillation Detection :')
-%     tic
-% end
-% [ AFibRuns, SinusArrhythmiaRuns, SinusTachyRuns, QRSComplexes ] = Detection_IrregularInterval( ...
-%     ECGSignals, ...
-%     QRSComplexes, ...
-%     SinusTachyRuns, ...
-%     AnalysisParametersRequest, ...
-%     HolterRecordInfoRequest );
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     toc
-%     disp(' ')
-% end
-
-
-% Premature Beats
-
-
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     tic
-%     disp('Premature Ventricular Run Detection : ')
-% end
-% 
-% [ QRSComplexes, PVCRuns, VentricularTachyRuns] = ClassPrematureBeats.FindPrematureBeatRuns( ...
-%     QRSComplexes, ...
-%     VentricularTachyRuns, ...
-%     'V', ...
-%     HolterRecordInfoRequest );
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('# Completed...')
-%     toc
-%     disp(' ')
-% end
-
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     tic
-%     disp('Premature Atrial Run Detection : ')
-% end
-% % 
-% [ QRSComplexes, PACRuns, SupraventricularTachyRuns ] = ClassPrematureBeats.FindPrematureBeatRuns( ...
-%     QRSComplexes, ...
-%     SupraventricularTachyRuns, ...
-%     'A', ...
-%     HolterRecordInfoRequest );
-% 
-% if MatlabAPIConfigRequest.IsLogWriteToConsole
-%     disp('# Completed...')
-%     toc
-%     disp(' ')
-% end
-
+%% Morphology Based Premature Beat Classification
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     tic
     disp('Morph and Template Based Premature Beat Detection ')
 end
 
-[ QRSComplexes,similarity, NormalSample ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+[ QRSComplexes,similarity, NormalSample ] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
@@ -572,9 +418,7 @@ end
 
 
 
-
-
-% Beat Type
+%% Beat Type
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     tic
@@ -672,50 +516,6 @@ JsonResponsePackets.NoiseResponse = ClassPackageOutput.NoisePacket( ...
     ( length( ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ) ) / HolterRecordInfoRequest.RecordSamplingFrequency ) ... % Total Duration
     );
 
-% % - Ventricular Events
-% JsonResponsePackets.VentricularEventsResponse = ClassPackageOutput.VentricularEventsPacket( QRSComplexes, PVCRuns );
-% 
-% % - Supraventricular Events
-% JsonResponsePackets.SupraventricularEventsResponse = ClassPackageOutput.SupraventricularEventsPacket( QRSComplexes, PACRuns );
-% 
-% % - Tachycardia
-% JsonResponsePackets.TachycardiaResponse = ClassPackageOutput.TachycardiaPacket( ...
-%     SinusTachyRuns, ... % SinusTachyRuns Runs
-%     ActivityBasedTachycardiaRuns, ... % Activity BasedHigh Heart Rate Runs
-%     VentricularTachyRuns, ... % VentricularTachyRuns Runs
-%     SupraventricularTachyRuns, ... % Supraventricular Tachycardia Runs
-%     length( QRSComplexes.R ), ... % Total Beats
-%     GeneralPeriod ... % Heart rate summary of the all the signal round
-%     );
-% 
-% % - Bradycardia
-% JsonResponsePackets.BradycardiaResponse = ClassPackageOutput.BradycardiaPacket( ...
-%     BradycardiaRuns, ... % Bradycardia Runs
-%     PauseRuns, ... % Pause Runs
-%     AVBlockDegree1, ... % av block degree I
-%     AVBlockDegree2_Type1, ... % av block degree II type 1
-%     AVBlockDegree2_Type2, ... % av block degree II type 2
-%     AVBlockDegree3, ... % av block degree III
-%     single( [ ] ), ... % activity based
-%     length( QRSComplexes.R ), ... % Total Beats
-%     round( numel( ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ) ) / HolterRecordInfoRequest.RecordSamplingFrequency ), ... % Total Duration
-%     GeneralPeriod ... % Heart rate summary of the all the signal round
-%     );
-% 
-% % - Atrial Fibrillation
-% JsonResponsePackets.AtrialFibrillationResponse = ClassPackageOutput.AtrialFibPacket( ...
-%     AFibRuns, ... % AFib Runs
-%     length( QRSComplexes.R ) ... % Total Beats
-%     );
-% 
-% % - Sinus Arrhythmia
-% JsonResponsePackets.SinusArrhythmiaResponse = ClassPackageOutput.SinusArythmiaPacket( ...
-%     SinusArrhythmiaRuns, ... % Sinus Arrhythmia Runs
-%     length( QRSComplexes.R ) ... % Total Beats
-%     );
-% 
-% % - Atrial Flutter
-% JsonResponsePackets.AtrialFlutterResponse = ClassPackageOutput.AtrialFlutterPacket( [ ] ); % Under development...
 
 % - Ventricular Fibrillation
 JsonResponsePackets.VentricularFibrillationResponse = ClassPackageOutput.VentricularFibPacket( ...
@@ -723,11 +523,7 @@ JsonResponsePackets.VentricularFibrillationResponse = ClassPackageOutput.Ventric
     round( numel( ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ) ) / HolterRecordInfoRequest.RecordSamplingFrequency ) ... % Total Duration
     );
 
-% % - Ventricular Flutter
-% JsonResponsePackets.VentricularFlutterResponse = ClassPackageOutput.VentricularFlutterPacket( ...
-%     VentricularFlutterRuns, ... % VFlutter Runs
-%     length( QRSComplexes.R ) ... % Total Duration
-%     );
+
 
 % - Asystole
 JsonResponsePackets.AsystoleResponse = ClassPackageOutput.AsystolePacket( ...
@@ -763,7 +559,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** MORPH AND TEMPLATE MATCHING BASED PREMATURE BEAT CLASSIFICATION 21/02/2022 *** NORMAL BEAT SELECTION'  ...
+disp( [ 'Analysis is completed: *** NOISE RUNS ARE REMOVED ***  10.08.2022'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

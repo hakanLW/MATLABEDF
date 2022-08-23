@@ -22,6 +22,7 @@ if ~isempty( qrsComplexes.R )
     % Atrial Beats
     beatTypes( qrsComplexes.AtrialBeats == true  ) = "A_"; % | qrsComplexes.SVTBeats == true
     % Noise Beats
+    
     beatTypes( qrsComplexes.NoisyBeat == true ) = "X_";
     
     if ~isempty( beatTypes )

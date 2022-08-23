@@ -1,4 +1,6 @@
-function [ qrsComplexes,similarity, NormalSample] = MorphBasedRecognition2( qrsComplexes,ecgSignal)
+function [ qrsComplexes,similarity, NormalSample] = MorphBasedRecognition( qrsComplexes,ecgSignal)
+
+
 if length(qrsComplexes.HeartRate)>15
     %% HEART RATE CHANGE 
 
@@ -85,7 +87,7 @@ if length(qrsComplexes.HeartRate)>15
     end
 
     %% ECTOPICS DETECTION
-
+    % Detection early beats with threshold value 1.15
     ectopics=zeros(length(hrChange),1,'logical');
     ectopics((single(hrChange) >single(1.15) & single( hrChange)<single(4)))=true; 
     ectopics(qrsComplexes.NoisyBeat==true)=false;
@@ -104,10 +106,10 @@ if length(qrsComplexes.HeartRate)>15
 
 
     %% NORMAL BEAT SELECTION
-
+    %Selection Reference Beat
     possibleVentricular=zeros(length(qrsComplexes.R),1);
 
-
+    % If beat have  p wave 
     NormalMorph=find(qrsComplexes.BeatMorphology==0 & qrsComplexes.NoisyBeat==0 & ectopics==0 & qrsComplexes.P.StartPoint>1 ...
         & qrsComplexes.P.EndPoint>1 & qrsComplexes.HeartRate > 40 ...
         & qrsComplexes.HeartRate<100 );
@@ -190,26 +192,6 @@ if length(qrsComplexes.HeartRate)>15
 
     end
 
-    % dyn=zeros(length(NormalMorph),1);
-    % sym=zeros(length(NormalMorph),1);
-    % for z=1:length(NormalMorph)
-    %     dyn(z)=round(exp(-(qrsComplexes.QRSInterval(NormalMorph(z))/qrsComplexes.QRSInterval(N))),2,'significant');
-    %     sym(z)=similarity(NormalMorph(z));
-    % end
-    % symMean=mean(sym);
-    % symSTD=std(sym);
-    % dynMean=mean(dyn);
-    % dynSTD=std(dyn);
-    % dynThresh=dynMean-dynSTD;
-    % dynTreshSim=symMean-symSTD;
-    % 
-    % for o =1:length(similarity)
-    %     if round(exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <= dynThresh && similarity(o) <dynTreshSim
-    %           possibleVentricular(o)=true;   
-    %     end
-    % end
-
-
     for o =1:length(similarity)
         if round(similarity(o)*exp(-(qrsComplexes.QRSInterval(o)/qrsComplexes.QRSInterval(N))),2,'significant') <= 0.30 && similarity(o) <0.95
               possibleVentricular(o)=true;   
@@ -236,18 +218,7 @@ if length(qrsComplexes.HeartRate)>15
         end
     end
 
-    % %% COMPENSATORY PAUSE
-    % for a=3:length(qrsComplexes.AtrialBeats)-2
-    %     if (qrsComplexes.RRInterval(a-1)*1.985<=qrsComplexes.RRInterval(a)+qrsComplexes.RRInterval(a+1)) && ectopics(a-2)==false &&ectopics(a+2)==false && similarity(a) < 0.95
-    %         qrsComplexes.AtrialBeats(a)=false;
-    %         qrsComplexes.VentricularBeats(a)=true;
-    %     end
-    % end
 
-    %% TACHYCARDIA 
-
-    %  qrsComplexes.VentricularBeats(qrsComplexes.AtrialBeats(similarity<0))=true;
-    %  qrsComplexes.AtrialBeats(similarity<0)=false;
     
 else
      qrsComplexes.AtrialBeats=[ ];

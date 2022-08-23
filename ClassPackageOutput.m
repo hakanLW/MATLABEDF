@@ -119,11 +119,11 @@ classdef ClassPackageOutput
             % - signal duration sample to ms
             signalSampleDuration = signalSampleDuration / recordInfo.RecordSamplingFrequency; % sec
             signalSampleDuration = round( signalSampleDuration * single( 1000 ) ); % msec
-            % - noise ratio
-            %             if ~isempty( qrsComplexes.R ); noisyBeatRatio = sum( qrsComplexes.NoisyBeat ) / length( qrsComplexes.R ); else; noisyBeatRatio = single( 0 ); end
-            if ~isempty( noiseRun );signalNoiseRatio = sum( noiseRun.Duration ) / signalSampleDuration; else; signalNoiseRatio = single( 0 ); end
-            %             totalNoiseRatio = single( round( ( noisyBeatRatio + signalNoiseRatio ), 2 ) );
-            totalNoiseRatio = single( round( ( signalNoiseRatio ), 2 ) );
+%             % - noise ratio
+%             %             if ~isempty( qrsComplexes.R ); noisyBeatRatio = sum( qrsComplexes.NoisyBeat ) / length( qrsComplexes.R ); else; noisyBeatRatio = single( 0 ); end
+%             if ~isempty( noiseRun );signalNoiseRatio = sum( noiseRun.Duration ) / signalSampleDuration; else; signalNoiseRatio = single( 0 ); end
+%             %             totalNoiseRatio = single( round( ( noisyBeatRatio + signalNoiseRatio ), 2 ) );
+%             totalNoiseRatio = single( round( ( signalNoiseRatio ), 2 ) );
             
             % Class: AnalysisSummary
             % -
@@ -151,8 +151,25 @@ classdef ClassPackageOutput
             else
                 analysisSummaryPacket.Summary.ActiveSignals = recordInfo.ChannelList;
             end
-            % -
-            analysisSummaryPacket.Summary.SignalQuality = single ( ( single( 1 ) - totalNoiseRatio ) * 100 );
+            
+            % - analysisSummaryPacket.Summary.SignalQuality = single ( ( single( 1 ) - totalNoiseRatio ) * 100 );
+            
+            if ~isempty(qrsComplexes.NoisyBeat)
+                analysisSummaryPacket.Summary.SignalQuality=...
+                      single(length(qrsComplexes.R(qrsComplexes.NoisyBeat==0))/ ...
+                      length(qrsComplexes.R))*single(100);
+                      
+            else
+                if length(qrsComplexes.R) >20
+                    analysisSummaryPacket.Summary.SignalQuality=single(100);
+                else
+                    analysisSummaryPacket.Summary.SignalQuality=single(0);
+                end
+
+            end
+            
+            
+           
             
             % Class: Beats
             analysisSummaryPacket.Beats.TotalBeats = int32( length( qrsComplexes.R ) );
