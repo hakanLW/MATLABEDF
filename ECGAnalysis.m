@@ -460,7 +460,29 @@ if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp(' ')
 end
 
+%% HRV FREQUENCY
 
+
+
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    tic
+    disp('Frequency Domain Analysis: ')
+end
+
+if MatlabAPIConfigRequest.Frequency
+Time = Sample2Miliseconds(QRSComplexes.R,HolterRecordInfoRequest.RecordSamplingFrequency );
+if any(diff(Time) <= 0)
+    disp('Input time vector T must be monotonically increasing.')
+end
+[ Spectral_HRV ] = Calc_HRV_spect(QRSComplexes.RRInterval, Time ,'Window_Size',300,'Window_overlap',120 ); 
+else
+Spectral_HRV=[ ];   
+end
+if MatlabAPIConfigRequest.IsLogWriteToConsole
+    disp('# Completed...')
+    toc
+    disp(' ')
+end
 
 %% Generate Response Packets
 % - Analysis Summary Response
@@ -539,6 +561,10 @@ JsonResponsePackets.BeatDetailsResponse = ClassPackageOutput.BeatDetailsPacket( 
 
 %-PaceMakerResponse
 JsonResponsePackets.PaceMakerResponse = ClassPackageOutput.PaceMakerPacket( Pace,SignalNoisePoints );
+
+%-FrequencyDomainResponse
+JsonResponsePackets.FrequencyDomainResponse = ClassPackageOutput.FrequencyDomainPacket(Spectral_HRV );
+
 
 %% Json Encode
 
