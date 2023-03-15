@@ -30,7 +30,7 @@ format longG
 % Versions
 ResponseInfo.Version.Major = int32( 11 );
 ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 5);
+ResponseInfo.Version.Build = int32( 6);
 
 disp('VERSION 1.0.4')
 
@@ -585,7 +585,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** NOISE RUNS ARE REMOVED ***  10.08.2022'  ...
+disp( [ 'Analysis is completed: *** FREQUENCY DOMAIN ANALYSIS ***  15.03.2023'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

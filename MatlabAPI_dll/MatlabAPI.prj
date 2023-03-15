@@ -3,11 +3,11 @@
     <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.04</param.version>
+    <param.version>1.05</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
-    <param.summary>ECG Analysis Algorithm v1.0.3</param.summary>
+    <param.summary>ECG Analysis Algorithm v1.0.5</param.summary>
     <param.description>[ JsonResponsePackets ] = ECGAnalysis ( JsonRequestPackets)
 
 &lt;&lt;&lt; Function Inputs &gt;&gt;&gt;
@@ -54,7 +54,7 @@ string JsonResponsePackets
     <param.net.tsa.namespace />
     <param.net.tsa.superclass>ClassMatlabAPI</param.net.tsa.superclass>
     <param.net.tsa.metadata />
-    <param.net.tsa.metadata.assembly>C:\Users\Lenovo\Documents\MATLAB</param.net.tsa.metadata.assembly>
+    <param.net.tsa.metadata.assembly>C:\GIT\matlabapideveloper</param.net.tsa.metadata.assembly>
     <param.net.saved.interface />
     <unset>
       <param.icon />
@@ -115,6 +115,7 @@ string JsonResponsePackets
       <file>C:\GIT\matlabapideveloper\BeatClassification.m</file>
       <file>C:\GIT\matlabapideveloper\BeatMorphology.m</file>
       <file>C:\GIT\matlabapideveloper\BeatTypeRecognition.m</file>
+      <file>C:\GIT\matlabapideveloper\Calc_HRV_spect.m</file>
       <file>C:\GIT\matlabapideveloper\ClassBeatDetection.m</file>
       <file>C:\GIT\matlabapideveloper\ClassChangeChannel.m</file>
       <file>C:\GIT\matlabapideveloper\ClassDatetimeCalculation.m</file>
@@ -138,10 +139,11 @@ string JsonResponsePackets
       <file>C:\GIT\matlabapideveloper\ECGFilterSignal.m</file>
       <file>C:\GIT\matlabapideveloper\ECGIntervalSegmentCalculation.m</file>
       <file>C:\GIT\matlabapideveloper\HRVAnalysis.m</file>
-      <file>C:\GIT\matlabapideveloper\MorphBasedRecognition2.m</file>
+      <file>C:\GIT\matlabapideveloper\MorphBasedRecognition.m</file>
       <file>C:\GIT\matlabapideveloper\NoiseBeatClassification.m</file>
       <file>C:\GIT\matlabapideveloper\PaceDetector.m</file>
       <file>C:\GIT\matlabapideveloper\ReSampleECG.m</file>
+      <file>C:\GIT\matlabapideveloper\Sample2Miliseconds.m</file>
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>

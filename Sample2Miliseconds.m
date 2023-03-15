@@ -28,7 +28,7 @@ stringArray = strings( length( msecArray ), 1);
             timeList=cellstr(stringArray);
 
             
-            Time = cellfun(@(x) str2num(x(1:2))*86400 + str2num(x(4:5))*3600 + str2num(x(7:8))*60 +  str2num(x(10:11)) + str2num(x(12:14))/1000,timeList) ;  
+            Time = cellfun(@(x) str2double(x(1:2))*86400 + str2double(x(4:5))*3600 + str2double(x(7:8))*60 +  str2double(x(10:11)) + str2double(x(12:14))/1000,timeList) ;  
             
 %             Time = Time - Time(1) ;
 
