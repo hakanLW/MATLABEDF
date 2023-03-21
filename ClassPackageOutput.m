@@ -21,8 +21,8 @@ classdef ClassPackageOutput
     % > AlarmButtonPacket
     % > NoisePacket
     % > BeatDetailsPacket
-    % >PaceMakerPacket
-    % >FrequencyDomainPacket
+    % > PaceMakerPacket
+    % > FrequencyDomainPacket
     % > JsonPacket
     %
     
@@ -1801,7 +1801,7 @@ classdef ClassPackageOutput
             end
         end
         %% 
-        %% Pace Maker Packet
+        %% FrequencyDomainPacket
         %
         function frequencyPacket =FrequencyDomainPacket( Spectral_HRV )
            if ~isempty( Spectral_HRV )
@@ -1809,19 +1809,19 @@ classdef ClassPackageOutput
                frequencyPacket.LF = Spectral_HRV.LF;  
                frequencyPacket.VLF = Spectral_HRV.VLF;
                frequencyPacket.HF_LF_ratio = Spectral_HRV.HF_LF_ratio; 
-               frequencyPacket.Time = Spectral_HRV.Time;     
+%                frequencyPacket.Time = Spectral_HRV.Time;     
       
                frequencyPacket.HF(end+1) = deal(int32(0));
                frequencyPacket.LF(end+1) = deal(int32(0));
                frequencyPacket.VLF(end+1)= deal(int32(0));
                frequencyPacket.HF_LF_ratio(end+1) = deal(int32(0));
-               frequencyPacket.Time(end+1) = deal(int32(0));      
+%                frequencyPacket.Time(end+1) = deal(int32(0));      
             else
                frequencyPacket.HF(end+1)= string(nan);
                frequencyPacket.LF(end+1) = string(nan);
                frequencyPacket.VLF(end+1) = string(nan);
                frequencyPacket.HF_LF_ratio(end+1) = string(nan);
-               frequencyPacket.Time(end+1) = string(nan); 
+%                frequencyPacket.Time(end+1) = string(nan); 
             end
         end
         %% 
