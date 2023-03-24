@@ -1817,10 +1817,10 @@ classdef ClassPackageOutput
                frequencyPacket.HF_LF_ratio(end+1) = deal(int32(0));
 %                frequencyPacket.Time(end+1) = deal(int32(0));      
             else
-               frequencyPacket.HF(end+1)= string(nan);
-               frequencyPacket.LF(end+1) = string(nan);
-               frequencyPacket.VLF(end+1) = string(nan);
-               frequencyPacket.HF_LF_ratio(end+1) = string(nan);
+               frequencyPacket.HF= string(nan);
+               frequencyPacket.LF = string(nan);
+               frequencyPacket.VLF = string(nan);
+               frequencyPacket.HF_LF_ratio = string(nan);
 %                frequencyPacket.Time(end+1) = string(nan); 
             end
         end
