@@ -1,6 +1,6 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Wed Mar 15 15:48:52 2023
+* Date: Wed Aug 10 14:29:52 2022
 * Arguments:
 * "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI,Clas
 * sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\matlabapideveloper\MatlabAPI_dll\Matlab
