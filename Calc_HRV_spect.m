@@ -83,7 +83,7 @@ for k = 1 : length(Windows_Start)
     Spectral_HRV.LF(k)          = sum( PSD( PSD_Freq > LF_limits(1)  & PSD_Freq < LF_limits(2) )   ) ; % sum squere of energy for low frequencys
     Spectral_HRV.VLF(k)         = sum( PSD( PSD_Freq > VLF_limits(1)  & PSD_Freq < VLF_limits(2) )   ) ; % sum squere of energy for very low frequencys
     Spectral_HRV.HF_LF_ratio(k) = Spectral_HRV.HF(k)./ Spectral_HRV.LF(k) ; 
-%     Spectral_HRV.Time(k)        = Windows_Start(k) + Window_Size ;
+    Spectral_HRV.Time(k)        = Windows_Start(k) + Window_Size ;
     
 end
 
