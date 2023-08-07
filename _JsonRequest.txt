@@ -78,15 +78,13 @@
 		"Channel": "Lead2"
 	},
 	"MatlabAPIConfigRequest": {
-		"IsLogWriteToConsole": true,
-		"Frequency" : true
+		"IsLogWriteToConsole": true
 	},
 	"AlarmButtonRequest": null,
 	"EnvironmentConfig": {
 		"Environment": null,
 		"ChannelDataPath": "9581-20211221163013\"
 	},
-	"ReAnalysis": true,
+	"ReAnalysis": false,
 	"PaceMaker": false
-	
 }
