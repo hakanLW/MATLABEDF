@@ -14,7 +14,7 @@
 
 function [JsonResponsePackets] = ECGAnalysis ( FileAdress, JsonRequestPackets)
 
-
+hakan =5;
 %% Initialization
 
 
@@ -22,6 +22,7 @@ JsonResponsePackets = [ ];
 
 
 %% Matlab API Info
+
 
 
 % Format
