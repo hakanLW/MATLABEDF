@@ -1,10 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Wed Dec 04 12:01:24 2024
+* Date: Tue Dec 03 23:58:25 2024
 * Arguments:
 * "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI,Clas
-* sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_t
-* esting""-v""class{ClassMatlabAPI:C:\GIT\MatlabECG\ECGAnalysis.m}"
+* s3,4.0,private""-T""link:lib""-d""C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing""
+* -v""class{Class3:C:\GIT\MatlabECG\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
@@ -16,11 +16,11 @@ using MathWorks.MATLAB.NET.Utility;
 [assembly: System.Reflection.AssemblyKeyFile(@"")]
 #endif
 
-namespace MatlabAPI
+namespace MatlabAPINative
 {
 
   /// <summary>
-  /// The ClassMatlabAPI class provides a CLS compliant, MWArray interface to the MATLAB
+  /// The Class3 class provides a CLS compliant, Object (native) interface to the MATLAB
   /// functions contained in the files:
   /// <newpara></newpara>
   /// C:\GIT\MatlabECG\ECGAnalysis.m
@@ -28,14 +28,14 @@ namespace MatlabAPI
   /// <remarks>
   /// @Version 4.0
   /// </remarks>
-  public class ClassMatlabAPI : IDisposable
+  public class Class3 : IDisposable
   {
     #region Constructors
 
     /// <summary internal= "true">
     /// The static constructor instantiates and initializes the MATLAB Runtime instance.
     /// </summary>
-    static ClassMatlabAPI()
+    static Class3()
     {
       if (MWMCR.MCRAppInitialized)
       {
@@ -79,9 +79,9 @@ namespace MatlabAPI
 
 
     /// <summary>
-    /// Constructs a new instance of the ClassMatlabAPI class.
+    /// Constructs a new instance of the Class3 class.
     /// </summary>
-    public ClassMatlabAPI()
+    public Class3()
     {
       if(ex_ != null)
       {
@@ -97,7 +97,7 @@ namespace MatlabAPI
     /// <summary internal= "true">
     /// Class destructor called by the CLR garbage collector.
     /// </summary>
-    ~ClassMatlabAPI()
+    ~Class3()
     {
       Dispose(false);
     }
@@ -138,23 +138,23 @@ namespace MatlabAPI
     #region Methods
 
     /// <summary>
-    /// Provides a single output, 0-input MWArrayinterface to the ECGAnalysis MATLAB
+    /// Provides a single output, 0-input Objectinterface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
     /// M-Documentation:
     /// Initialization
     /// </remarks>
-    /// <returns>An MWArray containing the first output argument.</returns>
+    /// <returns>An Object containing the first output argument.</returns>
     ///
-    public MWArray ECGAnalysis()
+    public Object ECGAnalysis()
     {
-      return mcr.EvaluateFunction("ECGAnalysis", new MWArray[]{});
+      return mcr.EvaluateFunction("ECGAnalysis", new Object[]{});
     }
 
 
     /// <summary>
-    /// Provides a single output, 1-input MWArrayinterface to the ECGAnalysis MATLAB
+    /// Provides a single output, 1-input Objectinterface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
@@ -162,16 +162,16 @@ namespace MatlabAPI
     /// Initialization
     /// </remarks>
     /// <param name="FileAdress">Input argument #1</param>
-    /// <returns>An MWArray containing the first output argument.</returns>
+    /// <returns>An Object containing the first output argument.</returns>
     ///
-    public MWArray ECGAnalysis(MWArray FileAdress)
+    public Object ECGAnalysis(Object FileAdress)
     {
       return mcr.EvaluateFunction("ECGAnalysis", FileAdress);
     }
 
 
     /// <summary>
-    /// Provides a single output, 2-input MWArrayinterface to the ECGAnalysis MATLAB
+    /// Provides a single output, 2-input Objectinterface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
@@ -180,16 +180,16 @@ namespace MatlabAPI
     /// </remarks>
     /// <param name="FileAdress">Input argument #1</param>
     /// <param name="JsonRequestPackets">Input argument #2</param>
-    /// <returns>An MWArray containing the first output argument.</returns>
+    /// <returns>An Object containing the first output argument.</returns>
     ///
-    public MWArray ECGAnalysis(MWArray FileAdress, MWArray JsonRequestPackets)
+    public Object ECGAnalysis(Object FileAdress, Object JsonRequestPackets)
     {
       return mcr.EvaluateFunction("ECGAnalysis", FileAdress, JsonRequestPackets);
     }
 
 
     /// <summary>
-    /// Provides the standard 0-input MWArray interface to the ECGAnalysis MATLAB
+    /// Provides the standard 0-input Object interface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
@@ -200,14 +200,14 @@ namespace MatlabAPI
     /// <returns>An Array of length "numArgsOut" containing the output
     /// arguments.</returns>
     ///
-    public MWArray[] ECGAnalysis(int numArgsOut)
+    public Object[] ECGAnalysis(int numArgsOut)
     {
-      return mcr.EvaluateFunction(numArgsOut, "ECGAnalysis", new MWArray[]{});
+      return mcr.EvaluateFunction(numArgsOut, "ECGAnalysis", new Object[]{});
     }
 
 
     /// <summary>
-    /// Provides the standard 1-input MWArray interface to the ECGAnalysis MATLAB
+    /// Provides the standard 1-input Object interface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
@@ -219,14 +219,14 @@ namespace MatlabAPI
     /// <returns>An Array of length "numArgsOut" containing the output
     /// arguments.</returns>
     ///
-    public MWArray[] ECGAnalysis(int numArgsOut, MWArray FileAdress)
+    public Object[] ECGAnalysis(int numArgsOut, Object FileAdress)
     {
       return mcr.EvaluateFunction(numArgsOut, "ECGAnalysis", FileAdress);
     }
 
 
     /// <summary>
-    /// Provides the standard 2-input MWArray interface to the ECGAnalysis MATLAB
+    /// Provides the standard 2-input Object interface to the ECGAnalysis MATLAB
     /// function.
     /// </summary>
     /// <remarks>
@@ -239,8 +239,8 @@ namespace MatlabAPI
     /// <returns>An Array of length "numArgsOut" containing the output
     /// arguments.</returns>
     ///
-    public MWArray[] ECGAnalysis(int numArgsOut, MWArray FileAdress, MWArray 
-                           JsonRequestPackets)
+    public Object[] ECGAnalysis(int numArgsOut, Object FileAdress, Object 
+                          JsonRequestPackets)
     {
       return mcr.EvaluateFunction(numArgsOut, "ECGAnalysis", FileAdress, JsonRequestPackets);
     }
@@ -248,7 +248,7 @@ namespace MatlabAPI
 
     /// <summary>
     /// Provides an interface for the ECGAnalysis function in which the input and output
-    /// arguments are specified as an array of MWArrays.
+    /// arguments are specified as an array of Objects.
     /// </summary>
     /// <remarks>
     /// This method will allocate and return by reference the output argument
@@ -257,15 +257,16 @@ namespace MatlabAPI
     /// Initialization
     /// </remarks>
     /// <param name="numArgsOut">The number of output arguments to return</param>
-    /// <param name= "argsOut">Array of MWArray output arguments</param>
-    /// <param name= "argsIn">Array of MWArray input arguments</param>
+    /// <param name= "argsOut">Array of Object output arguments</param>
+    /// <param name= "argsIn">Array of Object input arguments</param>
+    /// <param name= "varArgsIn">Array of Object representing variable input
+    /// arguments</param>
     ///
-    public void ECGAnalysis(int numArgsOut, ref MWArray[] argsOut, MWArray[] argsIn)
+    [MATLABSignature("ECGAnalysis", 2, 1, 0)]
+    protected void ECGAnalysis(int numArgsOut, ref Object[] argsOut, Object[] argsIn, params Object[] varArgsIn)
     {
-      mcr.EvaluateFunction("ECGAnalysis", numArgsOut, ref argsOut, argsIn);
+        mcr.EvaluateFunctionForTypeSafeCall("ECGAnalysis", numArgsOut, ref argsOut, argsIn, varArgsIn);
     }
-
-
 
     /// <summary>
     /// This method will cause a MATLAB figure window to behave as a modal dialog box.

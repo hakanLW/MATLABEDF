@@ -1,7 +1,7 @@
 
-% Reading .bin File
+% Reading .edf File
 %
-% [ ECG ] = ECGBinary2Structure( MatlabAPIConfig, RecordInfo )
+% [ ECG ] = ECGEdfStructure( MatlabAPIConfig, RecordInfo )
 %
 % <<< Function Inputs >>>
 %   struct MatlabAPIConfig
@@ -11,28 +11,13 @@
 %   struct ECG
 %
 
-function [ ECG ] = ECGBinary2Structure( MatlabAPIConfig, RecordInfo )
+function [ ECG ] = ECGEdf2Structure( MatlabAPIConfig, RecordInfo )
 
+[~,signal] =edfread(MatlabAPIConfig.FileAdress);
 % Record Info
 % - Number of channels
 channelCount = length( RecordInfo.ChannelList );
-% - Record Length
-file2ReadInfo = dir( char( MatlabAPIConfig.FileAdress ) );
-channelDataLength = double( file2ReadInfo.bytes );
-channelDataLength = fix( channelDataLength / ( channelCount * 4 ) );
-
-% check if file is broken
-if floor( channelDataLength ) == channelDataLength
-    % open file
-    file2Read = fopen( MatlabAPIConfig.FileAdress );
-    % get data
-    rawSignal = fread( file2Read, [ channelCount, channelDataLength ], 'single' );
-    rawSignal = transpose( single( rawSignal ) );
-    % close file
-    fclose( file2Read );
-else
-    error('Given binary file is broken.')
-end
+rawSignal = transpose( single( signal ) );
 
 % check if file is empty
 if ~isempty( rawSignal )
@@ -58,6 +43,8 @@ if ~isempty( rawSignal )
 else
     error('Given binary file is empty.')
 end
+
+
 
 end
 

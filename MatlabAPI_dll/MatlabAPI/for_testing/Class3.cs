@@ -1,10 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Wed Dec 04 12:01:24 2024
+* Date: Tue Dec 03 23:58:25 2024
 * Arguments:
 * "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI,Clas
-* sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_t
-* esting""-v""class{ClassMatlabAPI:C:\GIT\MatlabECG\ECGAnalysis.m}"
+* s3,4.0,private""-T""link:lib""-d""C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing""
+* -v""class{Class3:C:\GIT\MatlabECG\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
@@ -20,7 +20,7 @@ namespace MatlabAPI
 {
 
   /// <summary>
-  /// The ClassMatlabAPI class provides a CLS compliant, MWArray interface to the MATLAB
+  /// The Class3 class provides a CLS compliant, MWArray interface to the MATLAB
   /// functions contained in the files:
   /// <newpara></newpara>
   /// C:\GIT\MatlabECG\ECGAnalysis.m
@@ -28,14 +28,14 @@ namespace MatlabAPI
   /// <remarks>
   /// @Version 4.0
   /// </remarks>
-  public class ClassMatlabAPI : IDisposable
+  public class Class3 : IDisposable
   {
     #region Constructors
 
     /// <summary internal= "true">
     /// The static constructor instantiates and initializes the MATLAB Runtime instance.
     /// </summary>
-    static ClassMatlabAPI()
+    static Class3()
     {
       if (MWMCR.MCRAppInitialized)
       {
@@ -79,9 +79,9 @@ namespace MatlabAPI
 
 
     /// <summary>
-    /// Constructs a new instance of the ClassMatlabAPI class.
+    /// Constructs a new instance of the Class3 class.
     /// </summary>
-    public ClassMatlabAPI()
+    public Class3()
     {
       if(ex_ != null)
       {
@@ -97,7 +97,7 @@ namespace MatlabAPI
     /// <summary internal= "true">
     /// Class destructor called by the CLR garbage collector.
     /// </summary>
-    ~ClassMatlabAPI()
+    ~Class3()
     {
       Dispose(false);
     }

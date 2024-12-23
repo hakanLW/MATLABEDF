@@ -14,9 +14,7 @@
 
 function [JsonResponsePackets] = ECGAnalysis ( FileAdress, JsonRequestPackets)
 
-hakan =5;
 %% Initialization
-
 
 JsonResponsePackets = [ ];
 
@@ -28,12 +26,13 @@ JsonResponsePackets = [ ];
 % Format
 format longG
 
-% Versions
-ResponseInfo.Version.Major = int32( 11 );
-ResponseInfo.Version.Minor = int32( 0 );
-ResponseInfo.Version.Build = int32( 5);
 
-disp('VERSION 1.0.4')
+% Versions
+ResponseInfo.Version.Major = int32( 12 );
+ResponseInfo.Version.Minor = int32( 0 );
+ResponseInfo.Version.Build = int32( 0);
+
+disp('VERSION 2.0.0')
 
 
 % Analysis Info
@@ -50,7 +49,7 @@ ResponseInfo.Analysis.StartDateTime = datetime('now','TimeZone','UTC','Format','
 [ HolterRecordInfoRequest, AnalysisParametersRequest, AlarmButton, MatlabAPIConfigRequest ] = ...
     DecodeRequestJson( JsonRequestPackets, FileAdress );
 clear JsonRequestPackets;
-clear FileAdress;
+
 if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('Request packets are imported...')
     disp(' ')
@@ -61,7 +60,7 @@ end
 %% Get ECG Signal
 
 
-    
+if ((FileAdress( ( end - 18 ):end ) == '_FilteredSignal.bin'))  
     if MatlabAPIConfigRequest.IsLogWriteToConsole
         disp('ECG Signal is being imported...')
         tic
@@ -73,6 +72,13 @@ end
         toc
         disp(' ')
     end
+else
+     ECGSignals = ECGEdf2Structure( MatlabAPIConfigRequest, HolterRecordInfoRequest );
+     MatlabAPIConfigRequest.FileAdress = replace(MatlabAPIConfigRequest.FileAdress, '.EDF', '.bin');
+
+end
+clear FileAdress;
+    
     
 
 
@@ -560,7 +566,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** NOISE RUNS ARE REMOVED ***  10.08.2022'  ...
+disp( [ 'Analysis is completed: *** EDF ANALYSIS***  03.12.2024'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

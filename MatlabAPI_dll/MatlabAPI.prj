@@ -1,13 +1,13 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1039464222" file="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\matlabapideveloper\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="1039464222" file="C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI.prj" location="C:\GIT\MatlabECG\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.04</param.version>
+    <param.version>2.0</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
-    <param.summary>ECG Analysis Algorithm v1.0.3</param.summary>
+    <param.summary>ECG Analysis Algorithm v2</param.summary>
     <param.description>[ JsonResponsePackets ] = ECGAnalysis ( JsonRequestPackets)
 
 &lt;&lt;&lt; Function Inputs &gt;&gt;&gt;
@@ -54,7 +54,7 @@ string JsonResponsePackets
     <param.net.tsa.namespace />
     <param.net.tsa.superclass>ClassMatlabAPI</param.net.tsa.superclass>
     <param.net.tsa.metadata />
-    <param.net.tsa.metadata.assembly>C:\Users\Lenovo\Documents\MATLAB</param.net.tsa.metadata.assembly>
+    <param.net.tsa.metadata.assembly>C:\GIT\MatlabECG</param.net.tsa.metadata.assembly>
     <param.net.saved.interface />
     <unset>
       <param.icon />
@@ -99,56 +99,58 @@ string JsonResponsePackets
       <param.net.saved.interface />
     </unset>
     <fileset.exports>
-      <file>C:\GIT\matlabapideveloper\ECGAnalysis.m</file>
+      <file>C:\GIT\MatlabECG\ECGAnalysis.m</file>
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
         <entity.class name="ClassMatlabAPI">
-          <file>C:\GIT\matlabapideveloper\ECGAnalysis.m</file>
+          <file>C:\GIT\MatlabECG\ECGAnalysis.m</file>
         </entity.class>
       </entity.package>
     </fileset.classes>
     <fileset.resources />
     <fileset.depfun>
-      <file>C:\GIT\matlabapideveloper\_JsonRequest.txt</file>
-      <file>C:\GIT\matlabapideveloper\AverageHeartRateDetection.m</file>
-      <file>C:\GIT\matlabapideveloper\BeatClassification.m</file>
-      <file>C:\GIT\matlabapideveloper\BeatMorphology.m</file>
-      <file>C:\GIT\matlabapideveloper\BeatTypeRecognition.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassBeatDetection.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassChangeChannel.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassDatetimeCalculation.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassFilter.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassNotchCharacteristic.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassNotchEvaluation.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassPackageOutput.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassPTDetection.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassRhythmAnalysis.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassSlope.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassTypeConversion.m</file>
-      <file>C:\GIT\matlabapideveloper\ClassUnusualSignalDetection.m</file>
-      <file>C:\GIT\matlabapideveloper\DecodeRequestJson.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_Beat.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_PT.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_Q.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_QS.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_S.m</file>
-      <file>C:\GIT\matlabapideveloper\Detection_VFib.m</file>
-      <file>C:\GIT\matlabapideveloper\ECGBinary2Structure.m</file>
-      <file>C:\GIT\matlabapideveloper\ECGFilterSignal.m</file>
-      <file>C:\GIT\matlabapideveloper\ECGIntervalSegmentCalculation.m</file>
-      <file>C:\GIT\matlabapideveloper\HRVAnalysis.m</file>
-      <file>C:\GIT\matlabapideveloper\MorphBasedRecognition2.m</file>
-      <file>C:\GIT\matlabapideveloper\NoiseBeatClassification.m</file>
-      <file>C:\GIT\matlabapideveloper\PaceDetector.m</file>
-      <file>C:\GIT\matlabapideveloper\ReSampleECG.m</file>
+      <file>C:\GIT\MatlabECG\_JsonRequest.txt</file>
+      <file>C:\GIT\MatlabECG\AverageHeartRateDetection.m</file>
+      <file>C:\GIT\MatlabECG\BeatClassification.m</file>
+      <file>C:\GIT\MatlabECG\BeatMorphology.m</file>
+      <file>C:\GIT\MatlabECG\BeatTypeRecognition.m</file>
+      <file>C:\GIT\MatlabECG\ClassBeatDetection.m</file>
+      <file>C:\GIT\MatlabECG\ClassChangeChannel.m</file>
+      <file>C:\GIT\MatlabECG\ClassDatetimeCalculation.m</file>
+      <file>C:\GIT\MatlabECG\ClassFilter.m</file>
+      <file>C:\GIT\MatlabECG\ClassNotchCharacteristic.m</file>
+      <file>C:\GIT\MatlabECG\ClassNotchEvaluation.m</file>
+      <file>C:\GIT\MatlabECG\ClassPackageOutput.m</file>
+      <file>C:\GIT\MatlabECG\ClassPTDetection.m</file>
+      <file>C:\GIT\MatlabECG\ClassRhythmAnalysis.m</file>
+      <file>C:\GIT\MatlabECG\ClassSlope.m</file>
+      <file>C:\GIT\MatlabECG\ClassTypeConversion.m</file>
+      <file>C:\GIT\MatlabECG\ClassUnusualSignalDetection.m</file>
+      <file>C:\GIT\MatlabECG\DecodeRequestJson.m</file>
+      <file>C:\GIT\MatlabECG\Detection_Beat.m</file>
+      <file>C:\GIT\MatlabECG\Detection_PT.m</file>
+      <file>C:\GIT\MatlabECG\Detection_Q.m</file>
+      <file>C:\GIT\MatlabECG\Detection_QS.m</file>
+      <file>C:\GIT\MatlabECG\Detection_S.m</file>
+      <file>C:\GIT\MatlabECG\Detection_VFib.m</file>
+      <file>C:\GIT\MatlabECG\ECGBinary2Structure.m</file>
+      <file>C:\GIT\MatlabECG\ECGEdf2Structure.m</file>
+      <file>C:\GIT\MatlabECG\ECGFilterSignal.m</file>
+      <file>C:\GIT\MatlabECG\ECGIntervalSegmentCalculation.m</file>
+      <file>C:\GIT\MatlabECG\edfread.m</file>
+      <file>C:\GIT\MatlabECG\HRVAnalysis.m</file>
+      <file>C:\GIT\MatlabECG\MorphBasedRecognition.m</file>
+      <file>C:\GIT\MatlabECG\NoiseBeatClassification.m</file>
+      <file>C:\GIT\MatlabECG\PaceDetector.m</file>
+      <file>C:\GIT\MatlabECG\ReSampleECG.m</file>
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI.dll</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPINative.dll" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPINative.dll</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_overview.html" optional="false">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_overview.html</file>
-      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="readme.txt" optional="true">C:\GIT\matlabapideveloper\MatlabAPI_dll\MatlabAPI\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI.dll" optional="false">C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="readme.txt" optional="true">C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPINative.dll" optional="false">C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPINative.dll</file>
+      <file location="${PROJECT_ROOT}\MatlabAPI\for_testing" name="MatlabAPI_overview.html" optional="false">C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_testing\MatlabAPI_overview.html</file>
     </build-deliverables>
     <workflow />
     <matlab>

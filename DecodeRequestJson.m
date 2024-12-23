@@ -61,19 +61,20 @@ function isFileExist = CheckFileAdress( FileAdress )
 % Initialization
 FileAdress = char( FileAdress );
 isFileExist = false;
-
-% Check Adress
-% - check the length of the adress
-if ( length( FileAdress ) > 15 )
-    % - check the adress format
-    if FileAdress( ( end - 18 ):end ) == '_FilteredSignal.bin'
-        % - check if file exist
-        if exist( FileAdress, 'file' )
-            % - rise flag
+% Check Address
+% - check the length of the address
+if length(FileAdress) > 15
+    % - check the address format
+    if (strcmp(FileAdress((end-18):end), '_FilteredSignal.bin') || ...
+            strcmp(FileAdress((end-18):end), '_FilteredSignal.EDF'))
+        % - check if file exists
+        if exist(FileAdress, 'file')
+            % - raise flag
             isFileExist = true;
         end
     end
 end
+
 
 % Error
 if ~isFileExist

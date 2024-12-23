@@ -1,10 +1,10 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Wed Aug 10 14:29:52 2022
+* Date: Wed Dec 04 12:01:24 2024
 * Arguments:
 * "-B""macro_default""C:\GIT\matlabapideveloper\AssemblyInfo.cs""-W""dotnet:MatlabAPI,Clas
-* sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\matlabapideveloper\MatlabAPI_dll\Matlab
-* API\for_testing""-v""class{ClassMatlabAPI:C:\GIT\matlabapideveloper\ECGAnalysis.m}"
+* sMatlabAPI,4.0,private""-T""link:lib""-d""C:\GIT\MatlabECG\MatlabAPI_dll\MatlabAPI\for_t
+* esting""-v""class{ClassMatlabAPI:C:\GIT\MatlabECG\ECGAnalysis.m}"
 */
 using System;
 using System.Reflection;
@@ -23,7 +23,7 @@ namespace MatlabAPINative
   /// The ClassMatlabAPI class provides a CLS compliant, Object (native) interface to the
   /// MATLAB functions contained in the files:
   /// <newpara></newpara>
-  /// C:\GIT\matlabapideveloper\ECGAnalysis.m
+  /// C:\GIT\MatlabECG\ECGAnalysis.m
   /// </summary>
   /// <remarks>
   /// @Version 4.0
