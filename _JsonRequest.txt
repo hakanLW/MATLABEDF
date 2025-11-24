@@ -1,16 +1,14 @@
 {
   "HolterRecordInfoRequest": {
-    "RecordStartTime": "2022-10-24T09:00:00.000Z",
-    "RecordEndTime": "2022-10-24T09:01:00.000Z",
+    "RecordStartTime": "2025-01-01T12:04:31.000Z",
+    "RecordEndTime": "2025-01-01T12:18:52.000Z",
     "RecordSamplingFrequency": 250,
     "ChannelList": [
-      "V5",
-      "Lead1",
-      "Lead2"
+      "Lead1"
     ],
     "EcgElectrodeStateList": [
       {
-        "MeasurementDateTime": "2022-10-24T09:00:00.000Z",
+        "MeasurementDateTime": "2025-01-01T09:04:31.000Z",
         "CableSetType": 6,
         "ProbeStatus": {
           "V1": false,
@@ -46,13 +44,13 @@
   "AnalysisParametersRequest": {
     "Bradycardia": {
       "ClinicThreshold": 50,
-      "AlarmThreshold": 50,
-      "ActivityThreshold": 50
+      "AlarmThreshold": 0,
+      "ActivityThreshold": 0
     },
     "Tachycardia": {
       "ClinicThreshold": 100,
-      "AlarmThreshold": 100,
-      "ActivityThreshold": 100
+      "AlarmThreshold": 0,
+      "ActivityThreshold": 0
     },
     "Pause": {
       "ClinicThreshold": 2000
@@ -71,14 +69,14 @@
     "ActivityPeriod": [],
     "IntervalWithoutSignal": [
       {
-        "StartTime": "2022-10-24T22:00:00.000Z",
-        "EndTime": "2022-10-24T23:00:00.000Z"
+        "StartTime": "2025-01-01T22:04:31.000Z",
+        "EndTime": "2025-01-01T23:04:31.000Z"
       }
     ],
     "Channel": "Lead1"
   },
   "MatlabAPIConfigRequest": {
-    "IsLogWriteToConsole": true,
+    "IsLogWriteToConsole": false,
     "Frequency": true
   },
   "AlarmButtonRequest": null,
