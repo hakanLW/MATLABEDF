@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1003845036" file="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll\MatlabAPI.prj" location="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration build-checksum="126586431" file="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll\MatlabAPI.prj" location="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll" name="MatlabAPI" preferred-package-location="C:\Users\Hakan\Documents\GitHub\MATLABEDF\MatlabAPI_dll\MatlabAPI\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>MatlabAPI</param.appname>
     <param.icon />
     <param.icons />
@@ -110,10 +110,9 @@ string JsonResponsePackets
     </fileset.classes>
     <fileset.resources />
     <fileset.depfun>
-      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\_JsonRequest.txt</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\AverageHeartRateDetection.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\BeatClassification.m</file>
-      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\BeatMorphology.m</file>
+      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\BeatMorphology2.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\BeatTypeRecognition.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\ClassBeatDetection.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\ClassChangeChannel.m</file>
@@ -140,8 +139,8 @@ string JsonResponsePackets
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\ECGIntervalSegmentCalculation.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\edfread.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\HRVAnalysis.m</file>
-      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\MorphBasedRecognition.m</file>
-      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\NoiseBeatClassificationNew.m</file>
+      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\MorphBasedRecognition2.m</file>
+      <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\NoiseBeatClassification.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\PaceDetector.m</file>
       <file>C:\Users\Hakan\Documents\GitHub\MATLABEDF\ReSampleECG.m</file>
     </fileset.depfun>

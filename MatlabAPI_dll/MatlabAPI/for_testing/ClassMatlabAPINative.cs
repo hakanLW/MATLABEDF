@@ -1,6 +1,6 @@
 /*
 * MATLAB Compiler: 6.4 (R2017a)
-* Date: Mon Nov 24 14:25:57 2025
+* Date: Sat Dec 06 00:10:29 2025
 * Arguments:
 * "-B""macro_default""C:\Users\Hakan\Documents\GitHub\MATLABEDF\AssemblyInfo.cs""-W""dotne
 * t:MatlabAPI,ClassMatlabAPI,4.0,private""-T""link:lib""-d""C:\Users\Hakan\Documents\GitHu

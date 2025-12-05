@@ -25,14 +25,14 @@ if ~isempty( qrsComplexes ) && ~isempty( qrsComplexes.R )
     qrsAmplitudeThreshold = fitdist( double( qrsComplexes.QRSAmplitude ), 'normal' );
     qrsAmplitudeThreshold = qrsAmplitudeThreshold.mu * 10;
     % Noise Flag
-    noiseFlag( abs( ecgSignal ) > qrsAmplitudeThreshold ) = true;
+    noiseFlag( abs( ecgSignal ) > qrsAmplitudeThreshold ) = false;
     % Block
     [ nStart, nEnd ] = BlockSegmentation( noiseFlag );
     % Expend the blocks
     nStart = ...
-        nStart - recordInfo.RecordSamplingFrequency;
+        nStart - 0.25*recordInfo.RecordSamplingFrequency;
     nEnd = ...
-        nEnd + recordInfo.RecordSamplingFrequency;
+        nEnd + 0.25*recordInfo.RecordSamplingFrequency;
     
 else
     

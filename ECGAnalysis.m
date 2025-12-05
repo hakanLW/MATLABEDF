@@ -32,7 +32,7 @@ ResponseInfo.Version.Major = int32( 12 );
 ResponseInfo.Version.Minor = int32( 0 );
 ResponseInfo.Version.Build = int32( 0);
 
-disp('VERSION 2.0.0')
+disp('VERSION 2.1.0')
 
 
 % Analysis Info
@@ -197,7 +197,7 @@ end
         disp( 'Noise beat classifications are being extracted: ' )
         tic
     end
-    [ QRSComplexes, SignalNoisePoints ] = NoiseBeatClassificationNew(  ...
+    [ QRSComplexes, SignalNoisePoints ] = NoiseBeatClassification(  ...
         ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ), ...
         QRSComplexes, ...
         HolterRecordInfoRequest );
@@ -245,7 +245,7 @@ end
         disp( 'Beat morphologies are being extracted: ' )
         tic
     end
-    [ QRSComplexes, QRSMorphologies, BeatNoisePoints ] = BeatMorphology( ...
+    [ QRSComplexes, QRSMorphologies, BeatNoisePoints ] = BeatMorphology2( ...
         ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel ), ...
         QRSComplexes, ...
         HolterRecordInfoRequest );
@@ -414,7 +414,7 @@ if MatlabAPIConfigRequest.IsLogWriteToConsole
     disp('Morph and Template Based Premature Beat Detection ')
 end
 
-[ QRSComplexes,similarity, NormalSample ] = MorphBasedRecognition( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
+[ QRSComplexes,similarity, NormalSample ] = MorphBasedRecognition2( QRSComplexes ,  ECGSignals.( MatlabAPIConfigRequest.AnalysisChannel));
 
 
 if MatlabAPIConfigRequest.IsLogWriteToConsole
@@ -572,7 +572,7 @@ end
 % Analysis Finish Datetime
 MatlabAPIConfigRequest.AnalysisFinishDateTime = datetime('now');
 % Display
-disp( [ 'Analysis is completed: *** NOISE BEAT CLASSIFICATIOM***  24.144.2025'  ...
+disp( [ 'Analysis is completed: ***x-a-v ***  06.12.2025'  ...
     char(datetime('now') ) ] );
 disp( [ 'Total Analysis Duration: ' ...
     num2str( seconds( MatlabAPIConfigRequest.AnalysisFinishDateTime - MatlabAPIConfigRequest.AnalysisStartDateTime ) ) ' seconds.' ] )

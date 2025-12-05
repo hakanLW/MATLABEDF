@@ -86,11 +86,34 @@ end
 
 %% SubFunction : WriteJson
 
-function WriteJSON( requestJson )
+% function WriteJSON( requestJson )
+% 
+% fid = fopen('_JsonRequest.txt','wt');
+% fprintf(fid, string( requestJson ) );
+% fclose(fid);
+% 
+% end
+%%
+function WriteJSON(requestJson)
 
-fid = fopen('_JsonRequest.txt','wt');
-fprintf(fid, string( requestJson ) );
-fclose(fid);
+    % 1) Yazýlabilir güvenli bir klasör seç (temp)
+    outDir = fullfile(tempdir, 'MatlabLogs');
+    if ~exist(outDir, 'dir')
+        mkdir(outDir);
+    end
+
+    % 2) Dosya yolunu absolute yap
+    filePath = fullfile(outDir, '_JsonRequest.txt');
+
+    % 3) Dosyayý aç ve hata kontrolü yap
+    fid = fopen(filePath, 'wt');
+    if fid == -1
+        error('WriteJSON:FileOpenError', 'Dosya açýlamadý: %s', filePath);
+    end
+
+    % 4) Yaz ve kapa
+    fprintf(fid, '%s', string(requestJson));
+    fclose(fid);
 
 end
 
